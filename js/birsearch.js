@@ -5,8 +5,14 @@ const quickURL = 'https://svc-5024.birweb.1prime.ru/v2/QuickSearch?term='
 function companySelected(id, selPane) {
 	selPane.innerHTML = '';
 	selPane.style.opacity = 0;
-	const respane = document.getElementById('company-brief-names');
-	respane.innerHTML = '<div class="spinner"></div>';
+	const resBrief = document.getElementById('company-brief-names');
+	resBrief.innerHTML = '<div class="spinner"></div>';
+	const resOkved = document.getElementById('company-okveds');
+	resOkved.innerHTML = '<div class="spinner"></div>';
+	const resCompSize = document.getElementById('company-size');
+	resCompSize.innerHTML = '';
+	const resCompRanged = document.getElementById('company-ranged');
+	resCompRanged.innerHTML = '';
 
 	let url = 'https://api.codetabs.com/v1/proxy/?quest=' + encodeURIComponent('https://site.birweb.1prime.ru/company-brief/' + id);
 	console.log('fetching ' + url);
@@ -74,18 +80,34 @@ function companySelected(id, selPane) {
 				let a1= el.textContent;
 				el = el.nextElementSibling;
 				let a2 = el.textContent;
-				okved['Дополнительные'] = [a1,a2];
+				okved['Дополнительные'].push([a1,a2]);
 			}
 		}
 		bir['ОКВЭД'] = okved;
 
 		console.log(bir);
 
-		var out='';
-		for (const [key, value] of Object.entries(bir)) {
-			out += '<div><span>' + key + '</span>:&nbsp;<span>' + value + '</span></div>';
+		function fill_card(keys) {
+			let out = '';
+			keys.forEach( (key) => {
+				if (bir[key] !== undefined) {
+					out += '<dt>' + key + '</dt><dd>' + bir[key] + '</dd>';
+				}
+			});
+			return '<dl>' + out + '</dl>\n';
 		}
-		respane.innerHTML = out;
+		resBrief.innerHTML = fill_card(['Полное наименование', 'Сокращенное наименование', 'Наименование на латинице', 'Организационно-правовая форма', 'ИНН', 'ОГРН', 'ОКПО', 'Зарегистрирована']);
+		resOkved.innerHTML = '<h4>Основной</h4><div><b>' + bir['ОКВЭД']['Основной'][0] + '</b>&nbsp;' + bir['ОКВЭД']['Основной'][1] + '</div><h4>Дополнительные</h4>';
+		if (bir['ОКВЭД']['Дополнительные'].length)
+			resOkved.innerHTML += bir['ОКВЭД']['Дополнительные'].map(function(e, i){return '<div><b>'+ e[0] + '</b>&nbsp;' + e[1] + '</div>'}).join('\n');
+		resCompSize.innerHTML = fill_card(['Размер компании', 'Тип компании', 'Численность сотрудников', 'Уставный капитал']);
+		let compRange = bir['Благонадежность'] < 13 ? 1 : (bir['Благонадежность'] < 25 ? 2 : 3);
+		resCompRanged.innerHTML = '<div class="bir-company-range-' + compRange + '" title="Благонадежность">' + bir['Благонадежность'] + '</div>';
+		resCompRanged.innerHTML += '<div class="bir-company-range-desc-cnt">\
+		 <div class="bir-company-range-desc" title="Организация неблагонадежна">0-12</div>\
+		 <div class="bir-company-range-desc" title="Требуется дополнительный анализ">13-24</div>\
+		 <div class="bir-company-range-desc" title="Организация благонадежна">25-33</div>\
+		  </div>';
 
 	}).catch(function (err) {
 		// There was an error

@@ -212,10 +212,13 @@ ul.menu-v-pane li.separator { height:0; width:100%; border: 1px solid grey; padd
 	margin: 15px; padding:25px;
 	border: 1px solid #e0e0e0; border-radius: 15px;
 	background: var(--pane-fg);
+	font-size: 0.85rem;
 }
 .ui-pane-wide { width: auto; }
 .ui-pane-grouper {display:flex; flex-direction: row; align-items: flex-start; justify-content: flex-start; flex-wrap: wrap;}
 .ui-pane H1 {font-size: 18px; color: #000; white-space: nowrap; margin: 0 0 20px 0;}
+.ui-pane DT {color: #657d9e;}
+.ui-pane DD {font: 400 0.87rem "Roboto", sans-serif;}
 
 .birquickres-cnt {position: relative;margin:0; padding:0; border:none;}
 .birquickres {
@@ -235,6 +238,17 @@ ul.menu-v-pane li.separator { height:0; width:100%; border: 1px solid grey; padd
 	&:hover, &:focus, &:active {background: var(--item-sel-color);}
 }
 .birquickres .item .details {color:#849fc3; font-size: .7rem; display: flex; gap: .3rem; white-space: nowrap;}
+
+.bir-company-range-1, .bir-company-range-2, .bir-company-range-3 {font: 400 4.375rem/5.125rem "Roboto", sans-serif; letter-spacing: -.0625rem;}
+.bir-company-range-1 {color: #fe5080;}
+.bir-company-range-2 {color: #4b79f7;}
+.bir-company-range-3 {color: #28bc00;}
+.bir-company-range-desc-cnt {
+	color: #849fc3;
+	display: flex; justify-content: space-between; align-self: flex-start; flex-direction: row;
+	margin-top: 2.5rem;
+	font: 400 .7rem/2.25rem "Roboto", sans-serif;
+}
 
 /* spinner */
 .spinner {
