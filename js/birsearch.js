@@ -35,6 +35,7 @@ function companySelected(id, selPane) {
 		dsec = doc.querySelector('bir-company-overview div.company-overview-status__registration-date meta');
 		bir['Зарегистрирована'] = dsec.content;
 		dsec = doc.querySelector('bir-company-overview div.overview-layout__content__main');
+		// Полное наименование, наименовение на латинице, орг. форма и т.д.
 		dsec.querySelectorAll('noindex div.company-main__names__name__title').forEach((el) => {
 			let n = el.textContent.slice(0, -1);
 			let val = el.parentNode.nextElementSibling.textContent;
@@ -46,9 +47,12 @@ function companySelected(id, selPane) {
 		bir['Кредитоспособность'] = doc.querySelector('bir-widget-ranged-card.company-overview__credit').querySelector('div.ranged-card__content__value').textContent;
 		
 		dsec = doc.querySelector('bir-company-size div.company-size > div.company-size__content');
-		bir['Размер компании'] = dsec.querySelector('a.company-size__content__value').textContent
-		bir['Тип компании'] = dsec.ownerDocument.evaluate("//span[preceding::div[text()='Тип компании']]", dsec, null, XPathResult.ANY_TYPE, null ).iterateNext().textContent;
-		bir['Численность сотрудников'] = dsec.ownerDocument.evaluate("//span[preceding::div[text()='Численность сотрудников']]", dsec, null, XPathResult.ANY_TYPE, null ).iterateNext().textContent;
+		// bir['Размер компании'] = dsec.querySelector('a.company-size__content__value').textContent
+		// bir['Тип компании'] = dsec.ownerDocument.evaluate("//span[preceding::div[text()='Тип компании']]", dsec, null, XPathResult.ANY_TYPE, null ).iterateNext().textContent;
+		// bir['Численность сотрудников'] = dsec.ownerDocument.evaluate("//span[preceding::div[text()='Численность сотрудников']]", dsec, null, XPathResult.ANY_TYPE, null ).iterateNext().textContent;
+		dsec.querySelectorAll('div.company-size__content__title').forEach( (el) => {
+			bir[el.textContent] = el.nextElementSibling.textContent;
+		})
 
 		dsec = doc.querySelector('bir-company-authorized-capital > div.company-card-widget');
 		bir['Уставный капитал'] = dsec.querySelector('div.company-card-widget__value').textContent.trim();
