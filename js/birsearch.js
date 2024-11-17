@@ -2,7 +2,11 @@
 
 const quickURL = 'https://svc-5024.birweb.1prime.ru/v2/QuickSearch?term='
 
-function companySelected(id) {
+function companySelected(id, selPane) {
+	selPane.innerHTML = '';
+	selPane.style.opacity = 0;
+	const respane = document.getElementById('company-brief-card');
+	respane.innerHTML = '<div class="spinner"></div>';
 
 	let url = 'https://api.codetabs.com/v1/proxy/?quest=' + encodeURIComponent('https://site.birweb.1prime.ru/company-brief/' + id);
 	console.log('fetching ' + url);
@@ -38,11 +42,17 @@ function companySelected(id) {
 		// bir['Руководители'] = document.evaluate("//a[starts-with(@href, '/person-brief/')]", dsec, null, XPathResult.ANY_TYPE, null ).iterateNext().textContent;
 
 		console.log(bir);
-		console.log(document.evaluate("//div[text()='Тип компании']", dsec, null, XPathResult.ANY_TYPE, null ).iterateNext().nextSibling);
+
+		var out='';
+		for (const [key, value] of Object.entries(bir)) {
+			out += '<div><span>' + key + '</span>:&nbsp;<span>' + value + '</span></div>';
+		}
+		respane.innerHTML = out;
 
 	}).catch(function (err) {
 		// There was an error
 		console.warn('Something went wrong.', err);
+		respane.innerHTML = "<span>Ошибка получения данных</span>";
 	});
 
 }
@@ -67,8 +77,8 @@ function birsearchinput(e, respane) {
 	    		+ '<div class="details">ИНН:<span>' + rec['inn'] + '</span> ОГРН:<span>' + rec['ogrn'] + '</span></div>'
 	    	newDiv.onclick = function () {
 	    		// window.location.href = 'https://site.birweb.1prime.ru/company-brief/' + id;
-	    		companySelected(id);
-	    	}.bind(id);
+	    		companySelected(id, respane);
+	    	}.bind(id, respane);
 	    	respane.appendChild(newDiv);
     	});
 
