@@ -214,6 +214,7 @@ ul.menu-v-pane li.separator { height:0; width:100%; border: 1px solid grey; padd
 	background: var(--pane-fg);
 }
 .ui-pane-wide { width: auto; }
+.ui-pane-grouper {display:flex; flex-direction: row; align-items: flex-start; justify-content: flex-start; flex-wrap: wrap;}
 .ui-pane H1 {font-size: 18px; color: #000; white-space: nowrap; margin: 0 0 20px 0;}
 
 .birquickres-cnt {position: relative;margin:0; padding:0; border:none;}

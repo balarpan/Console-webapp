@@ -5,7 +5,7 @@ const quickURL = 'https://svc-5024.birweb.1prime.ru/v2/QuickSearch?term='
 function companySelected(id, selPane) {
 	selPane.innerHTML = '';
 	selPane.style.opacity = 0;
-	const respane = document.getElementById('company-brief-card');
+	const respane = document.getElementById('company-brief-names');
 	respane.innerHTML = '<div class="spinner"></div>';
 
 	let url = 'https://api.codetabs.com/v1/proxy/?quest=' + encodeURIComponent('https://site.birweb.1prime.ru/company-brief/' + id);
@@ -60,8 +60,24 @@ function companySelected(id, selPane) {
 		dsec = doc.querySelector('bir-company-tax-mode.company-overview__tax > div.company-card-widget');
 		bir['Режим налогообложения'] = dsec.querySelector('div.company-card-widget__value').textContent.trim();
 
-		// dsec = doc.querySelector('bir-company-chiefs.company-overview__chiefs > bir-widget-frame');
-		// bir['Руководители'] = dsec.ownerDocument..evaluate("//a[starts-with(@href, '/person-brief/')]", dsec, null, XPathResult.ANY_TYPE, null ).iterateNext().textContent;
+		// dsec = doc.querySelector('bir-company-chiefs div.company-main__controlling-persons');
+		dsec = doc.querySelector('bir-widget-okveds.company-overview__okveds');
+		let okved = {'Основной':[], 'Дополнительные':[]};
+		let okved_main = dsec.ownerDocument.evaluate("//header[text()='Основной']", dsec, null, XPathResult.ANY_TYPE, null ).iterateNext();
+		if (okved_main) {
+			okved['Основной'] = [okved_main.nextElementSibling.textContent, okved_main.nextElementSibling.nextElementSibling.textContent]
+		}
+		let okved_dop = dsec.ownerDocument.evaluate("//header[text()='Дополнительные']", dsec, null, XPathResult.ANY_TYPE, null ).iterateNext();
+		if (okved_dop) {
+			let el = okved_dop;
+			while (el = el.nextElementSibling) {
+				let a1= el.textContent;
+				el = el.nextElementSibling;
+				let a2 = el.textContent;
+				okved['Дополнительные'] = [a1,a2];
+			}
+		}
+		bir['ОКВЭД'] = okved;
 
 		console.log(bir);
 
