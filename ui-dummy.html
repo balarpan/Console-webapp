@@ -10,8 +10,17 @@
 <link rel="icon" type="image/png" sizes="32x32" href="ico/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="ico/favicon-16x16.png">
 <link rel="stylesheet" href="style.css">
-<script src="js/econsole.js"></script>
-</head><body>
+<script>
+function uiDummyImg() {
+	const params = new URLSearchParams(this.window.location.search);
+	const dummy = params.get('i');
+	if (dummy) {
+		img = document.getElementById('imgdummy');
+		img.src = 'miniature/miniature' + dummy + '.png'
+	}
+}
+</script>
+</head><body body onload="uiDummyImg();">
 
 <!-- Header -->
 <div id="head-bar-cnt"><div id="head-bar">
@@ -62,7 +71,7 @@
 	</div>
 	<!-- user main workspace -->
 	<div class="workspace-pane">
-		<img src="miniature/miniature1.png" width="1321px" height="761px">
+		<img id="imgdummy" src="" width="1321px" height="761px">
 	</div>
 
 </div></div>

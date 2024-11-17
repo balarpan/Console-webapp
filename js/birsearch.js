@@ -32,6 +32,15 @@ function companySelected(id, selPane) {
 			bir[arr[0].textContent.slice(0, -1)] = arr[1].textContent;
 		});
 
+		dsec = doc.querySelector('bir-company-overview div.company-overview-status__registration-date meta');
+		bir['Зарегистрирована'] = dsec.content;
+		dsec = doc.querySelector('bir-company-overview div.overview-layout__content__main');
+		dsec.querySelectorAll('noindex div.company-main__names__name__title').forEach((el) => {
+			let n = el.textContent.slice(0, -1);
+			let val = el.parentNode.nextElementSibling.textContent;
+			bir[n] = val;
+		})
+
 		bir['Благонадежность'] = doc.querySelector('div.ranged-card__content__value').textContent;
 		// var score_desc = doc.querySelector('div.ranged-card__content__value-description__legend__value').textContent;
 		bir['Кредитоспособность'] = doc.querySelector('bir-widget-ranged-card.company-overview__credit').querySelector('div.ranged-card__content__value').textContent;
