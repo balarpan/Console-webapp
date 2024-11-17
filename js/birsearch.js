@@ -30,7 +30,7 @@ function companySelected(id, selPane) {
 		var dsec = doc.querySelector('bir-company-size div.company-size > div.company-size__content');
 		bir['Размер компании'] = dsec.querySelector('a.company-size__content__value').textContent
 		bir['Тип компании'] = dsec.ownerDocument.evaluate("//span[preceding::div[text()='Тип компании']]", dsec, null, XPathResult.ANY_TYPE, null ).iterateNext().textContent;
-		bir['Численность сотрудников'] = dsec.ownerDocument..evaluate("//span[preceding::div[text()='Численность сотрудников']]", dsec, null, XPathResult.ANY_TYPE, null ).iterateNext().textContent;
+		bir['Численность сотрудников'] = dsec.ownerDocument.evaluate("//span[preceding::div[text()='Численность сотрудников']]", dsec, null, XPathResult.ANY_TYPE, null ).iterateNext().textContent;
 
 		dsec = doc.querySelector('bir-company-authorized-capital > div.company-card-widget');
 		bir['Уставный капитал'] = dsec.querySelector('div.company-card-widget__value').textContent.trim();
