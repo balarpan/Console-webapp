@@ -13,6 +13,8 @@ function companySelected(id, selPane) {
 	resCompSize.innerHTML = '';
 	const resCompRanged = document.getElementById('company-ranged');
 	resCompRanged.innerHTML = '';
+	const resCompCredit = document.getElementById('company-creditscore');
+	resCompCredit.innerHTML = '';
 
 	let url = 'https://api.codetabs.com/v1/proxy/?quest=' + encodeURIComponent('https://site.birweb.1prime.ru/company-brief/' + id);
 	console.log('fetching ' + url);
@@ -89,25 +91,46 @@ function companySelected(id, selPane) {
 
 		function fill_card(keys) {
 			let out = '';
-			keys.forEach( (key) => {
+			keys.forEach( (inkey) => {
+				let key = Array.isArray(inkey) ? inkey[0] : inkey;
+				let style = Array.isArray(inkey) ? ` class="${inkey[1]}"` : '';
 				if (bir[key] !== undefined) {
-					out += '<dt>' + key + '</dt><dd>' + bir[key] + '</dd>';
+					let val = bir[key];
+					out += `<dt${style}>${key}</dt><dd${style}>${val}</dd>`;
 				}
 			});
 			return '<dl>' + out + '</dl>\n';
 		}
-		resBrief.innerHTML = fill_card(['Полное наименование', 'Сокращенное наименование', 'Наименование на латинице', 'Организационно-правовая форма', 'ИНН', 'ОГРН', 'ОКПО', 'Зарегистрирована']);
-		resOkved.innerHTML = '<h4>Основной</h4><div><b>' + bir['ОКВЭД']['Основной'][0] + '</b>&nbsp;' + bir['ОКВЭД']['Основной'][1] + '</div><h4>Дополнительные</h4>';
+		resBrief.innerHTML = fill_card(['Полное наименование', 'Сокращенное наименование', 'Наименование на латинице', 'Организационно-правовая форма', 'Зарегистрирована', ['ИНН','oneline'], ['ОГРН','oneline'], ['ОКПО','oneline']]);
+		resOkved.innerHTML = '<h4>Основной</h4><div class="okved-record"><b>' + bir['ОКВЭД']['Основной'][0] + '</b>&nbsp;' + bir['ОКВЭД']['Основной'][1] + '</div><h4>Дополнительные</h4>';
 		if (bir['ОКВЭД']['Дополнительные'].length)
-			resOkved.innerHTML += bir['ОКВЭД']['Дополнительные'].map(function(e, i){return '<div><b>'+ e[0] + '</b>&nbsp;' + e[1] + '</div>'}).join('\n');
+			resOkved.innerHTML += bir['ОКВЭД']['Дополнительные'].map(function(e, i){return '<div class="okved-record"><b>'+ e[0] + '</b>&nbsp;' + e[1] + '</div>'}).join('\n');
 		resCompSize.innerHTML = fill_card(['Размер компании', 'Тип компании', 'Численность сотрудников', 'Уставный капитал']);
-		let compRange = bir['Благонадежность'] < 13 ? 1 : (bir['Благонадежность'] < 25 ? 2 : 3);
-		resCompRanged.innerHTML = '<div class="bir-company-range-' + compRange + '" title="Благонадежность">' + bir['Благонадежность'] + '</div>';
-		resCompRanged.innerHTML += '<div class="bir-company-range-desc-cnt">\
-		 <div class="bir-company-range-desc" title="Организация неблагонадежна">0-12</div>\
-		 <div class="bir-company-range-desc" title="Требуется дополнительный анализ">13-24</div>\
-		 <div class="bir-company-range-desc" title="Организация благонадежна">25-33</div>\
-		  </div>';
+		
+		if (!isNaN(parseInt(bir['Благонадежность']))) {
+			let compRange = bir['Благонадежность'] < 13 ? 1 : (bir['Благонадежность'] < 25 ? 2 : 3);
+			resCompRanged.innerHTML = '<div class="bir-company-range-' + compRange + '" title="Благонадежность">' + bir['Благонадежность'] + '</div>';
+			resCompRanged.innerHTML += '<div class="bir-company-range-desc-cnt">\
+			 <div class="bir-company-range-desc" title="Организация неблагонадёжна">0-12<br />Низкая</div>\
+			 <div class="bir-company-range-desc" title="Требуется дополнительный анализ">13-24<br />Средняя</div>\
+			 <div class="bir-company-range-desc" title="Организация благонадёжна">25-33<br />Высокая</div>\
+			  </div>';
+		}
+		else {
+			resCompRanged.innerHTML = '<div class="bir-company-range-none"><div><div class="bir-company-range-desc-cnt">Нет данных</div>';
+		}
+		if (!isNaN(parseInt(bir['Кредитоспособность']))) {
+			let compRange = bir['Кредитоспособность'] < 1.8 ? 1 : (bir['Кредитоспособность'] < 2.8 ? 2 : 3);
+			resCompCredit.innerHTML = '<div class="bir-company-range-' + compRange + '" title="Кредитоспособность">' + bir['Кредитоспособность'] + '</div>';
+			resCompCredit.innerHTML += '<div class="bir-company-range-desc-cnt">\
+			 <div class="bir-company-range-desc" title="Неустойчивое финансовое положение ">< 1.8<br />Низкая</div>\
+			 <div class="bir-company-range-desc" title="Требуется дополнительный анализ">1.8-2.7<br />Средняя</div>\
+			 <div class="bir-company-range-desc" title="Устойчивое финансовое положение">≥ 2.8<br />Высокая</div>\
+			  </div>';
+		}
+		else {
+			resCompCredit.innerHTML = '<div class="bir-company-range-none"><div><div class="bir-company-range-desc-cnt">Нет данных</div>';
+		}
 
 	}).catch(function (err) {
 		// There was an error
@@ -141,6 +164,8 @@ function birsearchinput(e, respane) {
 	    	}.bind(id, respane);
 	    	respane.appendChild(newDiv);
     	});
+    	if (respane.innerHTML == '')
+    		respane.innerHTML = '<span class="item-none">ничего не найдено</span>';
 
 		respane.style.opacity = 1;
     }

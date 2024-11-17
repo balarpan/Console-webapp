@@ -217,8 +217,11 @@ ul.menu-v-pane li.separator { height:0; width:100%; border: 1px solid grey; padd
 .ui-pane-wide { width: auto; }
 .ui-pane-grouper {display:flex; flex-direction: row; align-items: flex-start; justify-content: flex-start; flex-wrap: wrap;}
 .ui-pane H1 {font-size: 18px; color: #000; white-space: nowrap; margin: 0 0 20px 0;}
-.ui-pane DT {color: #657d9e;}
+.ui-pane DT {color: #657d9e; &:after{content: ':'}}
 .ui-pane DD {font: 400 0.87rem "Roboto", sans-serif;}
+.ui-pane DT.oneline, .ui-pane DD.oneline {display: inline-block; font-size: 90%; }
+.ui-pane DT.oneline {margin-inline-start: 0;}
+.ui-pane DD.oneline {margin-inline-start: 0.5rem; margin-right: 1.2rem;}
 
 .birquickres-cnt {position: relative;margin:0; padding:0; border:none;}
 .birquickres {
@@ -231,24 +234,29 @@ ul.menu-v-pane li.separator { height:0; width:100%; border: 1px solid grey; padd
 	box-shadow: 0 1px 1px hsl(0deg 0% 0% / 0.075), 0 2px 2px hsl(0deg 0% 0% / 0.075),
 		0 4px 4px hsl(0deg 0% 0% / 0.075), 0 8px 8px hsl(0deg 0% 0% / 0.075), 0 16px 16px hsl(0deg 0% 0% / 0.075);
 }
-.birquickres .item {
+.birquickres .item, .birquickres .item-none {
 	padding: 1.1rem 1.9rem; margin:0; font-size: .85rem;
 	display:flex; flex-direction: column; justify-content: space-between; gap: .4rem;
 	transition: background .4s ease;
 	&:hover, &:focus, &:active {background: var(--item-sel-color);}
 }
 .birquickres .item .details {color:#849fc3; font-size: .7rem; display: flex; gap: .3rem; white-space: nowrap;}
+.birquickres .item-none { color: #000; text-align: center; &:hover, &:focus, &:active {background: revert;} }
 
-.bir-company-range-1, .bir-company-range-2, .bir-company-range-3 {font: 400 4.375rem/5.125rem "Roboto", sans-serif; letter-spacing: -.0625rem;}
+.bir-company-range-1, .bir-company-range-2, .bir-company-range-3, .bir-company-range-none {font: 400 4.375rem/5.125rem "Roboto", sans-serif; letter-spacing: -.0625rem;}
 .bir-company-range-1 {color: #fe5080;}
 .bir-company-range-2 {color: #4b79f7;}
 .bir-company-range-3 {color: #28bc00;}
+.bir-company-range-none {color: #d7e2f0;}
 .bir-company-range-desc-cnt {
 	color: #849fc3;
 	display: flex; justify-content: space-between; align-self: flex-start; flex-direction: row;
 	margin-top: 2.5rem;
-	font: 400 .7rem/2.25rem "Roboto", sans-serif;
+	font: 400 .65rem/2.25rem "Roboto", sans-serif;
 }
+.bir-company-range-desc {line-height: 0.8rem; text-align: center;}
+
+.okved-record B {display: inline-block; min-width: 3em;}
 
 /* spinner */
 .spinner {
