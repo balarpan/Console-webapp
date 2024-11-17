@@ -29,7 +29,7 @@ function companySelected(id, selPane) {
 		bir['Кредитоспособность'] = doc.querySelector('bir-widget-ranged-card.company-overview__credit').querySelector('div.ranged-card__content__value').textContent;
 		var dsec = doc.querySelector('bir-company-size div.company-size > div.company-size__content');
 		bir['Размер компании'] = dsec.querySelector('a.company-size__content__value').textContent
-		bir['Тип компании'] = document.evaluate("//span[preceding::div[text()='Тип компании']]", dsec, null, XPathResult.ANY_TYPE, null ).iterateNext().textContent;
+		bir['Тип компании'] = dsec.evaluate("//span[preceding::div[text()='Тип компании']]", dsec, null, XPathResult.ANY_TYPE, null ).iterateNext().textContent;
 		bir['Численность сотрудников'] = document.evaluate("//span[preceding::div[text()='Численность сотрудников']]", dsec, null, XPathResult.ANY_TYPE, null ).iterateNext().textContent;
 
 		dsec = doc.querySelector('bir-company-authorized-capital > div.company-card-widget');
