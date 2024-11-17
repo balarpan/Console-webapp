@@ -208,11 +208,12 @@ ul.menu-v-pane li.separator { height:0; width:100%; border: 1px solid grey; padd
 
 /* UI pane */
 .ui-pane {
-	display: block;
+	display: block; width: max-content;
 	margin: 15px; padding:25px;
 	border: 1px solid #e0e0e0; border-radius: 15px;
 	background: var(--pane-fg);
 }
+.ui-pane-wide { width: auto; }
 .ui-pane H1 {font-size: 18px; color: #000; white-space: nowrap; margin: 0 0 20px 0;}
 
 .birquickres-cnt {position: relative;margin:0; padding:0; border:none;}

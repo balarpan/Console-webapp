@@ -24,10 +24,19 @@ function companySelected(id, selPane) {
 
 		var bir = {};
 
+		var dsec = doc.querySelector('bir-company-brief div.brief-layout__header > bir-company-header');
+		bir['Наименование'] = dsec.querySelector('h1.company-header__info__name__caption').textContent;
+		dsec = dsec.querySelector('div.company-header__info__codes');
+		dsec.querySelectorAll('div.company-header__info__codes__code').forEach((el) => {
+			let arr = el.getElementsByTagName('span');
+			bir[arr[0].textContent.slice(0, -1)] = arr[1].textContent;
+		});
+
 		bir['Благонадежность'] = doc.querySelector('div.ranged-card__content__value').textContent;
 		// var score_desc = doc.querySelector('div.ranged-card__content__value-description__legend__value').textContent;
 		bir['Кредитоспособность'] = doc.querySelector('bir-widget-ranged-card.company-overview__credit').querySelector('div.ranged-card__content__value').textContent;
-		var dsec = doc.querySelector('bir-company-size div.company-size > div.company-size__content');
+		
+		dsec = doc.querySelector('bir-company-size div.company-size > div.company-size__content');
 		bir['Размер компании'] = dsec.querySelector('a.company-size__content__value').textContent
 		bir['Тип компании'] = dsec.ownerDocument.evaluate("//span[preceding::div[text()='Тип компании']]", dsec, null, XPathResult.ANY_TYPE, null ).iterateNext().textContent;
 		bir['Численность сотрудников'] = dsec.ownerDocument.evaluate("//span[preceding::div[text()='Численность сотрудников']]", dsec, null, XPathResult.ANY_TYPE, null ).iterateNext().textContent;
