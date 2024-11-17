@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8" />
+<title>Консоль</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover" />
+<meta name=generator content="ENSI.Console" />
+<link rel="apple-touch-icon" sizes="180x180" href="ico/apple-touch-favicon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="ico/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="ico/favicon-16x16.png">
+<link rel="stylesheet" href="style.css">
+<script type="text/javascript" src="js/birsearch.js"></script>
+</head><body>
+
+<!-- Header -->
+<div id="head-bar-cnt"><div id="head-bar">
+</div></div>
+
+<div id="wrkspace-div-cnt"><div id="wrkspace-div">
+	<!-- left menu pane -->
+	<div class="menu-v-pane-cnt">
+		<div class="menu-v-logo"></div>
+		<ul class="menu-v-pane">
+			<li><a class="menu-btn-home" href="index.html"></a></li>
+			<li><div class="menu-btn-calend">
+				<ul class="submenu">
+					<li><a href="#">Новая оценка НМЦ</a></li>
+					<li><a href="#">Фин устойчивость</a></li>
+					<li><a href="birsearch.html">Поиск и проверка контрагента</a></li>
+				</ul>
+			</div></li>
+			<li><a class="menu-btn-users" href="#"></a></li>
+			<li><a class="menu-btn-notes" href="#"></a></li>
+			<li><a class="menu-btn-doc" href="#"></a></li>
+			<li><a class="menu-btn-bi" href="#"></a></li>
+			<li class="separator"></li>
+			<li><div class="menu-btn-stngs">
+				<ul class="submenu">
+					<li class="checkbox-cnt"><input type="checkbox" id="stngs-toggle1" checked>bla-bla-bla</li>
+					<li class="checkbox-cnt"><input type="checkbox" id="stngs-toggle2">bla-bla-bla</li>
+				</ul>
+			</div></li>
+			<li><div class="menu-btn-about">
+			</div>
+			</li>
+		</ul>
+	</div>
+	<!-- user main workspace -->
+	<div class="workspace-pane">
+		<div class="ui-pane">
+			<h1>Проверка контрагента</h1>
+			<br/>
+			<div class="index_srch_cnt">
+				<input type="text" placeholder="Найти.." pattern="s+" id="birsearch">
+				<span class="search-btn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#657789" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="search-btn-svg"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
+			</div>
+			<div class="birquickres-cnt"><div id="birsearchres" class="birquickres"></div></div>
+		</div>
+	</div>
+
+</div></div>
+
+<!-- Footer -->
+<div id="foot-bar-cnt"><div id="foot-bar">
+</div></div>
+
+</body></html>
