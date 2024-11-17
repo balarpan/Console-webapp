@@ -222,6 +222,12 @@ ul.menu-v-pane li.separator { height:0; width:100%; border: 1px solid grey; padd
 .ui-pane DT.oneline, .ui-pane DD.oneline {display: inline-block; font-size: 90%; }
 .ui-pane DT.oneline {margin-inline-start: 0;}
 .ui-pane DD.oneline {margin-inline-start: 0.5rem; margin-right: 1.2rem;}
+.ui-pane TABLE {table-layout: fixed; border-collapse: collapse; border: none; width: auto;}
+.ui-pane TABLE th, .ui-pane TABLE td { padding: 10px; font-variant-numeric: slashed-zero;}
+.ui-pane TABLE th {border-bottom: 1px solid grey; }
+/*.ui-pane tbody tr:nth-child(odd) { background-color: #ff33cc;}*/
+.ui-pane tbody tr:nth-child(even) { background-color: #f1f1f1;}
+.ui-pane tfoot {background-color: var(--item-sel-color); }
 
 .birquickres-cnt {position: relative;margin:0; padding:0; border:none;}
 .birquickres {

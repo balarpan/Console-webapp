@@ -10,7 +10,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="ico/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="ico/favicon-16x16.png">
 <link rel="stylesheet" href="style.css">
-<script src="js/econsole.js"></script>
+<script type="text/javascript" src="js/birnmc.js"></script>
 </head><body>
 
 <!-- Header -->
@@ -62,7 +62,27 @@
 	</div>
 	<!-- user main workspace -->
 	<div class="workspace-pane">
-		<img src="miniature/miniature1.png" width="1321px" height="761px">
+		<div class="ui-pane ui-pane-wide">
+			<br/>
+			<div class="index_srch_cnt">
+				<input type="text" placeholder="Найти.." pattern="s+" id="birsearch">
+				<span style="position: relative;">
+					<div id="nmc-progress" class="progressbar_cnt"><div class="progressbar"></div></div>
+				</span>
+			</div>
+		</div>
+		<div class="ui-pane">
+			<h1>Позиции ГКПЗ с возможностью снижения НМЦ</h1>
+			<h3>На основе данных о закупках на публичных ЭТП</h3>
+			<div id="nmc-decrease" style="min-width: 40rem;">
+				<table id="nmc-decrease-table"><thead>
+					<th>Поставщик</th><th>Утвержденная дата</th><th>Сумма<br />(руб.)</th><th>Новая сумма<br />(руб.)</th><th>delta<br />(руб.)</th>
+					</thead><tbody>					
+					</tbody>
+					<tfoot></tfoot>
+				</table>
+			</div>
+		</div>
 	</div>
 
 </div></div>
