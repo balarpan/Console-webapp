@@ -16,7 +16,8 @@ function companySelected(id, selPane) {
 	const resCompCredit = document.getElementById('company-creditscore');
 	resCompCredit.innerHTML = '';
 
-	let url = 'https://api.codetabs.com/v1/proxy/?quest=' + encodeURIComponent('https://site.birweb.1prime.ru/company-brief/' + id);
+	// let url = 'https://api.codetabs.com/v1/proxy/?quest=' + encodeURIComponent('https://site.birweb.1prime.ru/company-brief/' + id);
+	let url = 'https://api-ensi.dev.igit.spb.ru/company-brief/' + id;
 	console.log('fetching ' + url);
 	fetch(url).then(function (response) {
 		return response.text();
