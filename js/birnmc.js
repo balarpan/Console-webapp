@@ -24,29 +24,56 @@ const numberFormat = (number) => String(number).replace(
     ).join('')
 );
 
+function rowClick(e) {
+    e.stopPropagation();
+    // e.preventDefault();
+    let clickRow = e.currentTarget;
+    console.log( clickRow)
+}
+
 window.addEventListener('load', function () {
 	var dummyComp = [
-		['АО "ДФ ТРЕЙДИНГ"', '10.01.2025', 3066018, 3021018],
-		['ООО "МИИТ"', '12.07.2025', 41158982, 34150018],
-		['ОАО "АСМ-ЗАПЧАСТЬ"', '05.11.2025', 18140115, 14293521],
-		['АО СКБ "ТУРБИНА"', '08.04.2025', 23148, 22120],
-		['АО "ПРОГРЕСС-ЭЛЕКТРО"', '11.03.2025', 15185231, 11185264],
-		['АО "ОДК-СЕРВИС"', '18.12.2025', 11283112, 11105263],
+		['АО "ДФ ТРЕЙДИНГ"', 'Мосэнерго', '10.01.2025', '28.14.11.120', 3066018, 3021018],
+		['ООО "МИИТ"', 'МОЭК', '12.07.2025', '26.60.12.119', 41158982, 34150018],
+		['ОАО "АСМ-ЗАПЧАСТЬ"', 'Мосэнерго', '05.11.2025', '24.20.13.130', 18140115, 14293521],
+		['АО СКБ "ТУРБИНА"', 'ОГК-2', '08.04.2025', '28.14.13.131', 23148, 22120],
+		['АО "ПРОГРЕСС-ЭЛЕКТРО"', 'ТГК-1', '11.03.2025', '', 15185231, 11185264],
+		['АО "ОДК-СЕРВИС"', 'ОГК-2', '18.12.2025', '43.22.12.160', 11283112, 11105263],
+		['ЗАО "ЛСМУ СЗЭМ"', 'Мосэнерго', '20.01.2025', '', 722424, 720421],
+		['ООО "Комус-Петербург"', 'НЗЛ', '18.04.2025', '17.21.13', 20466545, 19856515],
+		['ООО "РусСоль"', 'ОГК-2', '02.08.2025', '25.94.11.110', 162545, 118400],
+		['ООО "Химпромсервис"', 'ТГК-1', '09.07.2025', '', 91234522, 89012090],
 	];
-	dummyComp.forEach((x) => x.push(x[2] - x[3]));
-	const dummySum = dummyComp.reduce((partialSum, a) => partialSum + a[4], 0);
+	dummyComp.forEach( function(x) {
+		x.push(numberFormat(100 - parseInt(100*x.at(-1)	/ x.at(-2))));
+		x.push(x.at(-3) - x.at(-2))
+	});
+	const dummySum = dummyComp.reduce((partialSum, a) => partialSum + a.at(-1), 0);
 
 	const birtable = document.getElementById("nmc-decrease-table").getElementsByTagName('tbody')[0];
 	const birtable_footer = document.getElementById("nmc-decrease-table").getElementsByTagName('tfoot')[0];
 	const progress = document.getElementById('nmc-progress');
 
 	function appendRow(rec) {
+		const styles = Array.from(Array(dummyComp.length).keys())
 		let newRow = birtable.insertRow(-1);
+		newRow.onclick = rowClick;
+		let cellNum = 0;
 		rec.forEach( (r1) => {
 			let cell = newRow.insertCell();
+			cell.classList.add('st' + styles[cellNum]);
 			let txt = isNumeric(r1) ? numberFormat(r1) : r1;
 			let newText = document.createTextNode(txt);
-			cell.appendChild(newText);
+			let newTag;
+			if (!cellNum) {
+				newTag = document.createElement('a');
+				newTag.setAttribute('href', "birsearch.html?srchname=" + encodeURIComponent(r1));
+				newTag.appendChild(newText);
+			}
+			else
+				newTag = newText;
+			cell.appendChild(newTag);
+			cellNum += 1;
 		});
 	}
 
@@ -55,7 +82,7 @@ window.addEventListener('load', function () {
 		let footer = document.getElementById("nmc-decrease-table").createTFoot();
 		let row = footer.insertRow(0);
 		let cell = row.insertCell(0);
-		cell.colSpan = "4";
+		cell.colSpan = "7";
 		cell.appendChild(document.createTextNode('Итого:'));
 		cell = row.insertCell(1);
 		cell.appendChild(document.createTextNode(numberFormat(dummySum)));

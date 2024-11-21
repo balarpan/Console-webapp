@@ -1,17 +1,6 @@
 "use strict";
 
 const quickURL = 'https://svc-5024.birweb.1prime.ru/v2/QuickSearch?term='
-function nextValidSibling(in_tag, incText=false) {
-	//incText - do we detect Text Nodes too
-	let acpType = incText ? [1,3] : [1];
-	let tag = in_tag.nextSibling;
-	while (tag) {
-		if (acpType.indexOf(tag.nodeType) >= 0)
-			return tag;
-		tag = tag.nextSibling;
-	}
-	return;
-}
 
 function companySelected(id, selPane) {
 	selPane.innerHTML = '';
@@ -28,106 +17,9 @@ function companySelected(id, selPane) {
 	resCompCredit.innerHTML = '';
 	const resCompContacts = document.getElementById('company-contacts');
 	resCompContacts.innerHTML = '';
-
-
-	// let url = 'https://api.codetabs.com/v1/proxy/?quest=' + encodeURIComponent('https://site.birweb.1prime.ru/company-brief/' + id);
-	let url = 'https://api-ensi.dev.igit.spb.ru/company-brief/' + id;
-	console.log('fetching ' + url);
-	fetch(url).then(function (response) {
-		return response.text();
-	}).then(function (html) {
-
-		// Convert the HTML string into a document object
-		var parser = new DOMParser();
-		var doc = parser.parseFromString(html, 'text/html');
-
-		// Get the image file
-		// var img = doc.querySelector('img');
-		// console.log(img);
-
-		var bir = {};
-
-		var dsec = doc.querySelector('bir-company-brief div.brief-layout__header > bir-company-header');
-		bir['Наименование'] = dsec.querySelector('h1.company-header__info__name__caption').textContent;
-		dsec = dsec.querySelector('div.company-header__info__codes');
-		dsec.querySelectorAll('div.company-header__info__codes__code').forEach((el) => {
-			let arr = el.getElementsByTagName('span');
-			bir[arr[0].textContent.slice(0, -1)] = arr[1].textContent;
-		});
-
-		dsec = doc.querySelector('bir-company-overview div.company-overview-status__registration-date meta');
-		bir['Зарегистрирована'] = dsec.content;
-		dsec = doc.querySelector('div.company-main__contacts div.company-main__contacts__address a');
-		bir['Адрес'] = '';
-		if (dsec) {
-			bir['Адрес'] = String(dsec.textContent + nextValidSibling(dsec, true).textContent).trim();
-		}
-		dsec = doc.querySelector('div.company-main__contacts');
-		let contactDetails = {
-			'email': "//bir-icon-text[@itemprop='email']//a",
-			'тел': "//bir-icon-text[@itemprop='telephone']//a",
-			'сайт': "//bir-icon-text[@itemprop='url']//a",
-			'Адрес недостоверен': "//bir-warnings-list//div[contains(@class, 'container__warning')]"
-		};
-		for (const [recType, xp] of Object.entries(contactDetails)) {
-			let dxp = dsec.ownerDocument.evaluate(xp, dsec, null, XPathResult.ANY_TYPE, null );
-			let a;
-			if (dxp && (a = dxp.iterateNext()))
-				bir[recType] = a.textContent;
-		}
-
-		// let dxp = dsec.ownerDocument.evaluate("//bir-icon-text[@itemprop='email']", dsec, null, XPathResult.ANY_TYPE, null );
-		// if (dxp) {
-		// 	bir['email'] = dxp.iterateNext().querySelector('a').textContent;
-		// }
-
-		dsec = doc.querySelector('bir-company-overview div.overview-layout__content__main');
-		// Полное наименование, наименовение на латинице, орг. форма и т.д.
-		dsec.querySelectorAll('noindex div.company-main__names__name__title').forEach((el) => {
-			let n = el.textContent.slice(0, -1);
-			let val = el.parentNode.nextElementSibling.textContent;
-			bir[n] = val;
-		})
-
-		bir['Благонадежность'] = doc.querySelector('div.ranged-card__content__value').textContent;
-		// var score_desc = doc.querySelector('div.ranged-card__content__value-description__legend__value').textContent;
-		bir['Кредитоспособность'] = doc.querySelector('bir-widget-ranged-card.company-overview__credit').querySelector('div.ranged-card__content__value').textContent;
 		
-		dsec = doc.querySelector('bir-company-size div.company-size > div.company-size__content');
-		// bir['Размер компании'] = dsec.querySelector('a.company-size__content__value').textContent
-		// bir['Тип компании'] = dsec.ownerDocument.evaluate("//span[preceding::div[text()='Тип компании']]", dsec, null, XPathResult.ANY_TYPE, null ).iterateNext().textContent;
-		// bir['Численность сотрудников'] = dsec.ownerDocument.evaluate("//span[preceding::div[text()='Численность сотрудников']]", dsec, null, XPathResult.ANY_TYPE, null ).iterateNext().textContent;
-		dsec.querySelectorAll('div.company-size__content__title').forEach( (el) => {
-			bir[el.textContent] = el.nextElementSibling.textContent;
-		})
-
-		dsec = doc.querySelector('bir-company-authorized-capital > div.company-card-widget');
-		bir['Уставный капитал'] = dsec.querySelector('div.company-card-widget__value').textContent.trim();
-
-		dsec = doc.querySelector('bir-company-tax-mode.company-overview__tax > div.company-card-widget');
-		bir['Режим налогообложения'] = dsec.querySelector('div.company-card-widget__value').textContent.trim();
-
-		// dsec = doc.querySelector('bir-company-chiefs div.company-main__controlling-persons');
-		dsec = doc.querySelector('bir-widget-okveds.company-overview__okveds');
-		let okved = {'Основной':[], 'Дополнительные':[]};
-		let okved_main = dsec.ownerDocument.evaluate("//header[text()='Основной']", dsec, null, XPathResult.ANY_TYPE, null ).iterateNext();
-		if (okved_main) {
-			okved['Основной'] = [okved_main.nextElementSibling.textContent, okved_main.nextElementSibling.nextElementSibling.textContent]
-		}
-		let okved_dop = dsec.ownerDocument.evaluate("//header[text()='Дополнительные']", dsec, null, XPathResult.ANY_TYPE, null ).iterateNext();
-		if (okved_dop) {
-			let el = okved_dop;
-			while (el = el.nextElementSibling) {
-				let a1= el.textContent;
-				el = el.nextElementSibling;
-				let a2 = el.textContent;
-				okved['Дополнительные'].push([a1,a2]);
-			}
-		}
-		bir['ОКВЭД'] = okved;
-
+	bir_company_id(id).then(function(bir) {
 		console.log(bir);
-
 		function fill_card(keys, withEmpty = true) {
 			let out = '';
 			const validVal = ((val) => withEmpty ? true : String(val).trim().length > 0);
@@ -141,7 +33,7 @@ function companySelected(id, selPane) {
 			});
 			return '<dl>' + out + '</dl>\n';
 		}
-		resBrief.innerHTML = fill_card(['Полное наименование', 'Сокращенное наименование', 'Наименование на латинице', 'Организационно-правовая форма', 'Зарегистрирована', ['ИНН','oneline'], ['ОГРН','oneline'], ['ОКПО','oneline']]);
+		resBrief.innerHTML = fill_card(['Полное наименование', 'Сокращенное наименование', 'Наименование на латинице', 'Организационно-правовая форма', 'Зарегистрирована', ['ИНН','oneline'], ['ОГРН','oneline'], ['ОКПО','oneline'], 'Статус']);
 		resCompContacts.innerHTML = fill_card([['Адрес','adress-brief'], ['Адрес недостоверен','adress-brief-warn'], ['email','oneline'], ['тел','oneline'], ['сайт','oneline']], false);
 		resOkved.innerHTML = '<h4>Основной</h4><div class="okved-record"><b>' + bir['ОКВЭД']['Основной'][0] + '</b>&nbsp;' + bir['ОКВЭД']['Основной'][1] + '</div><h4>Дополнительные</h4>';
 		if (bir['ОКВЭД']['Дополнительные'].length)
@@ -174,9 +66,12 @@ function companySelected(id, selPane) {
 		}
 
 		document.title ='Консоль. ' + bir['Сокращенное наименование'];
-
-	}).catch(function (err) {
-		// There was an error
+	    if (window.history.replaceState) {
+		    let urlParams = new URLSearchParams(window.location.search);
+		    urlParams.set('companyid', id);
+		    window.history.replaceState(null, document.title, location.protocol + '//' + location.host + location.pathname + '?' + urlParams.toString());
+		}
+	}).catch(function (err) {;
 		console.warn('Something went wrong.', err);
 		selPane.innerHTML = '<div class="item-none">Ошибка получения данных</span>';
 		selPane.style.opacity = 1;
@@ -242,7 +137,11 @@ window.addEventListener('load', function () {
 
 	const params = new URLSearchParams(this.window.location.search);
 	const initSearchName = params.get('srchname');
-	if (initSearchName) {
+	const initCompID = params.get('companyid');
+	if (initCompID) {
+		companySelected(initCompID, birsearchres);
+	}
+	else if (initSearchName) {
 		birsearch.value = initSearchName;
 		birsearch.dispatchEvent(new Event('input', { bubbles: true }));		
 	}

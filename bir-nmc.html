@@ -10,7 +10,8 @@
 <link rel="icon" type="image/png" sizes="32x32" href="ico/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="ico/favicon-16x16.png">
 <link rel="stylesheet" href="style.css">
-<script type="text/javascript" src="js/birnmc.js"></script>
+<script defer src="js/econsole.js"></script>
+<script defer type="text/javascript" src="js/birnmc.js"></script>
 </head><body>
 
 <!-- Header -->
@@ -21,44 +22,8 @@
 	<!-- left menu pane -->
 	<div class="menu-v-pane-cnt">
 		<div class="menu-v-logo"></div>
-		<ul class="menu-v-pane">
-			<li><a class="menu-btn-home" href="index.html"></a></li>
-			<li><div class="menu-btn-calend">
-				<ul class="submenu">
-					<li><a href="birsearch.html">Поиск и проверка контрагента</a></li>
-					<li><a href="bir-nmc.html">Проверка НМЦ в ГКПЗ</a></li>
-					<li><a href="#">Фин устойчивость</a></li>
-				</ul>
-			</div></li>
-			<li><a class="menu-btn-users" href="#"></a></li>
-			<li><div class="menu-btn-notes">
-				<ul class="submenu">
-					<li><a href="ui-dummy.html?i=2">Доля внеплановых закупок</a></li>
-					<li><a href="ui-dummy.html?i=1">Закупки по категориям</a></li>
-					<li><a href="ui-dummy.html?i=3">Контроль сроков закупок</a></li>
-					<li><a href="ui-dummy.html?i=4">Контроль за ходом исполнения ГКПЗ</a></li>
-					<li><a href="ui-dummy.html?i=5">Мониторинг ключевых точек закупочного процесса</a></li>
-				</ul>
-			</div></li>
-			<li><a class="menu-btn-doc" href="#"></a></li>
-			<li><div class="menu-btn-bi">
-				<ul class="submenu">
-					<li><a href="ui-dummy.html?i=6">Объем закупок</a></li>
-					<li><a href="ui-dummy.html?i=7">Освоение бюджета</a></li>
-					<li><a href="ui-dummy.html?i=8">Соблюдение сроков</a></li>
-				</ul>
-			</div></li>
-			<li class="separator"></li>
-			<li><div class="menu-btn-stngs">
-				<ul class="submenu">
-					<li class="checkbox-cnt"><input type="checkbox" id="stngs-toggle1" checked>bla-bla-bla</li>
-					<li class="checkbox-cnt"><input type="checkbox" id="stngs-toggle2">bla-bla-bla</li>
-				</ul>
-			</div></li>
-			<li><div class="menu-btn-about">
-			</div>
-			</li>
-		</ul>
+		<div id="menu-v-pane"><!-- menu content -->
+		</div>
 	</div>
 	<!-- user main workspace -->
 	<div class="workspace-pane">
@@ -76,7 +41,7 @@
 			<h3>На основе данных о закупках на публичных ЭТП</h3>
 			<div id="nmc-decrease" style="min-width: 40rem;">
 				<table id="nmc-decrease-table"><thead>
-					<th>Поставщик</th><th>Утвержденная дата</th><th>Сумма<br />(руб.)</th><th>Новая сумма<br />(руб.)</th><th>delta<br />(руб.)</th>
+					<th>Потенциальный поставщик</th><th>Организатор</th><th>Утвержденная дата</th><th>КОД ОКПД2</th><th>Сумма<br />(руб.)</th><th>Новая сумма<br />(руб.)</th><th>Экономия<br />(%)</th><th>Экономия<br />(руб.)</th>
 					</thead><tbody>					
 					</tbody>
 					<tfoot></tfoot>

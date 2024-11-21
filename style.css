@@ -37,7 +37,7 @@ body {
 	box-shadow: 0 1px 1px hsl(0deg 0% 0% / 0.075), 0 2px 2px hsl(0deg 0% 0% / 0.075),
 		0 4px 4px hsl(0deg 0% 0% / 0.075), 0 8px 8px hsl(0deg 0% 0% / 0.075), 0 16px 16px hsl(0deg 0% 0% / 0.075);
 }
-.menu-v-pane {margin: 0 2px 0 0; padding:2px 5px; border: none;}
+.menu-v-pane {margin: 0 2px 0 0; padding:2px 5px; border: none; min-height: 530px;}
 .menu-v-logo {
 	width: 85px; height: 49px;
 	background: url(img/logo_1020x591.png); background-position: center; background-repeat: no-repeat; background-size: cover;
@@ -224,10 +224,11 @@ ul.menu-v-pane li.separator { height:0; width:100%; border: 1px solid grey; padd
 .ui-pane DD.oneline {margin-inline-start: 0.5rem; margin-right: 1.2rem;}
 .ui-pane TABLE {table-layout: fixed; border-collapse: collapse; border: none; width: auto;}
 .ui-pane TABLE th, .ui-pane TABLE td { padding: 10px; font-variant-numeric: slashed-zero;}
-.ui-pane TABLE th {border-bottom: 1px solid grey; }
+.ui-pane TABLE th {border-bottom: 1px solid grey;}
+.ui-pane TABLE tr:first-child td { padding-top: 1.8em; }
 /*.ui-pane tbody tr:nth-child(odd) { background-color: #ff33cc;}*/
 .ui-pane tbody tr:nth-child(even) { background-color: #f1f1f1;}
-.ui-pane tfoot {background-color: var(--item-sel-color); }
+.ui-pane tfoot {background-color: var(--item-sel-color); font-weight: bold;}
 
 .birquickres-cnt {position: relative;margin:0; padding:0; border:none;}
 .birquickres {
@@ -268,6 +269,10 @@ ul.menu-v-pane li.separator { height:0; width:100%; border: 1px solid grey; padd
 .adress-brief-warn {border-left: .5rem solid #fe5000; padding: 0.75rem 1.3rem; background: #ffe2e9; max-width: 30rem;}
 DT.adress-brief-warn {background: revert; color: #fe5000; border: none; padding: revert;}
 
+
+TABLE#nmc-decrease-table td { font-variant-numeric: slashed-zero; }
+TABLE#nmc-decrease-table td.st1 { color: #18413a; font-weight: bold;}
+TABLE#nmc-decrease-table td.st3 { color: #3e3e97; font-family: Tahoma; font-size: 90%;}
 
 
 /* spinner */
