@@ -241,10 +241,11 @@ ul.menu-v-pane li.separator { height:0; width:100%; border: 1px solid grey; padd
 }
 .ui-pane nav .btn-drop-down ul li {
 	color:#000; background: var(--wrkspace-bg);
-	margin:0; padding: 1em; color: #000; background: var(--wrkspace-bg);
+	min-width: 10rem; margin:0; padding: 1em; color: #000; background: var(--wrkspace-bg);
 	cursor: pointer;
 	&:hover { background: var(--item-sel-color); }
 }
+
 .ui-pane DT {color: #657d9e; &:after{content: ':'}}
 .ui-pane DD {font: 400 0.87rem "Roboto", sans-serif;}
 .ui-pane DT.oneline, .ui-pane DD.oneline {display: inline-block; font-size: 90%; }

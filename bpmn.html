@@ -39,9 +39,17 @@
 			<h3>Диаграмма бизнес-процесса</h3>
 			<nav>
 				<span class="btn-drop-down"><a class="btn" href="#" tabindex="1">Фильтр БП</a><ul id="bpmn-pools"></ul></span>
+				<span class="btn-drop-down"><a class="btn" href="#" tabindex="1"><ul>
+					<li id="bpmn-reset"><span>Загрузить заново</span></li>
+					<li id="bpmn-fit-both"><span>Показать всю диаграмму</span></li>
+					<li id="bpmn-fit-center"><span>Центрировать диаграмму</span></li>
+					<li id="bpmn-fit-vert"><span>Вписать по вертикали</span></li>
+					<li id="bpmn-fit-horiz"><span>Вписать по горизонтали</span></li>
+					<li id="bpmn-fit-none"><span>Сбросить увеличение</span></li>
+				</ul>Сброс</a></span>
 			</nav>
 			<div id='bpmn-container'></div>
-			<div><br />Для навигации используйте левую кнопку мыши. <br />Для увеличения/уменьшения схемы используйте среднее колесо мыши при зажатой кнопке <code>Ctrl</code></div>
+			<div><br />Для навигации удерживайте левую кнопку мыши. <br />Для увеличения/уменьшения схемы используйте среднее колесо мыши при зажатой кнопке <code>Ctrl</code></div>
 		</div>
 	</div>
 
@@ -69,13 +77,15 @@ window.addEventListener('load', function () {
 	const bpmnVisualization = new bpmnvisu.BpmnVisualization({ container: bpmnContainer, navigation: { enabled: true } });
 	const poolsMenu = document.getElementById('bpmn-pools');
 	// const url = 'https://raw.githubusercontent.com/bpmn-miwg/bpmn-miwg-test-suite/refs/heads/master/Camunda%20Eclipse%20Plugin%203.0.0/C.3.0-export.bpmn'
-	const url = './bpmn/t1.bpmn'
+	const url = './bpmn/purchase-trade-platform.bpmn'
 	fetch(url).then(function (response) {
 		return response.text();
 	}).then(function (xml){
-		bpmnVisualization.load(xml);
-		// bpmnVisualization.navigation.fit({type: bpmnvisu.FitType.Center, margin: 10});
-		// bpmnVisualization.navigation.fit({type: bpmnvisu.FitType.Vertical, margin: 10});
+		function loadDiagram(){
+			bpmnVisualization.load(xml, {'disableConsoleLog': true});
+			// bpmnVisualization.navigation.fit({type: bpmnvisu.FitType.Center, margin: 10});
+			// bpmnVisualization.navigation.fit({type: bpmnvisu.FitType.Vertical, margin: 10});
+		}
 
 		function changePoolsVisibility(pools, poolIdToHighlight) {
 		  const model = bpmnVisualization.graph.getModel();
@@ -103,6 +113,17 @@ window.addEventListener('load', function () {
 		    model.endUpdate();
 		  }
 
+		}
+		loadDiagram();
+		document.getElementById('bpmn-reset').onclick = loadDiagram;
+		for (const [key, fittype] of Object.entries({
+			'bpmn-fit-both':bpmnvisu.FitType.HorizontalVertical,
+			'bpmn-fit-center':bpmnvisu.FitType.Center,
+			'bpmn-fit-vert':bpmnvisu.FitType.Vertical,
+			'bpmn-fit-horiz':bpmnvisu.FitType.Horizontal,
+			'bpmn-fit-none':bpmnvisu.FitType.None,
+		})) {
+			document.getElementById(key).onclick = function() {bpmnVisualization.navigation.fit({type: fittype, margin: 10});}
 		}
 		const bpmnElements = bpmnVisualization.bpmnElementsRegistry.getElementsByKinds([bpmnvisu.ShapeBpmnElementKind.POOL]);
 		const pools = bpmnElements.map(elt => elt.bpmnSemantic)
