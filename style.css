@@ -217,6 +217,34 @@ ul.menu-v-pane li.separator { height:0; width:100%; border: 1px solid grey; padd
 .ui-pane-wide { width: auto; }
 .ui-pane-grouper {display:flex; flex-direction: row; align-items: flex-start; justify-content: flex-start; flex-wrap: wrap;}
 .ui-pane H1 {font-size: 18px; color: #000; white-space: nowrap; margin: 0 0 20px 0;}
+.ui-pane nav ul {display: inline-block;}
+.ui-pane nav .btn {
+	display: inline-block; appearance: none;
+	color: #000; background: var(--wrkspace-bg);
+	font-size: .8rem;
+	border: .05rem solid #c7c6ea; border-radius: .3rem;
+	cursor: pointer; font-size: .8rem; height: 1.8rem;line-height: 1.8rem; outline: 0;
+	padding: .25rem .4rem; text-align: center; text-decoration: none;
+	transition: background .2s,border .2s,box-shadow .2s,color .2s;
+	&:hover {background: #4240d4; border-color: #3634d2; color:#fff;}
+}
+.ui-pane nav {display: inline-block; margin-bottom: 1.8rem;}
+.ui-pane nav .btn-drop-down { position:relative; display:inline-block;}
+.ui-pane nav .btn-drop-down ul {
+	display: none; position: absolute;
+	margin:0; padding:0; border:none; list-style: none inside; text-align: center; z-index: 1;
+	box-shadow: 0 1px 1px hsl(0deg 0% 0% / 0.075), 0 2px 2px hsl(0deg 0% 0% / 0.075),
+		0 4px 4px hsl(0deg 0% 0% / 0.075), 0 8px 8px hsl(0deg 0% 0% / 0.075), 0 16px 16px hsl(0deg 0% 0% / 0.075);
+}
+.ui-pane nav .btn-drop-down:hover ul, .ui-pane nav .btn-drop-down:focus ul, .ui-pane nav .btn-drop-down:active ul {
+	display: block;
+}
+.ui-pane nav .btn-drop-down ul li {
+	color:#000; background: var(--wrkspace-bg);
+	margin:0; padding: 1em; color: #000; background: var(--wrkspace-bg);
+	cursor: pointer;
+	&:hover { background: var(--item-sel-color); }
+}
 .ui-pane DT {color: #657d9e; &:after{content: ':'}}
 .ui-pane DD {font: 400 0.87rem "Roboto", sans-serif;}
 .ui-pane DT.oneline, .ui-pane DD.oneline {display: inline-block; font-size: 90%; }

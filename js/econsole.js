@@ -9,6 +9,7 @@ window.addEventListener('load', function () {
 					<li><a href="birsearch.html">Поиск и проверка контрагента</a></li>
 					<li><a href="bir-nmc.html">Проверка НМЦ в ГКПЗ</a></li>
 					<li><a href="#">Фин устойчивость</a></li>
+					<li><a href="bpmn.html">БП согласования закупки</a></li>
 				</ul>
 			</div></li>
 			<li><a class="menu-btn-users" href="#"></a></li>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8" />
+<title>Консоль</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover" />
+<meta name=generator content="ENSI.Console" />
+<link rel="apple-touch-icon" sizes="180x180" href="ico/apple-touch-favicon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="ico/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="ico/favicon-16x16.png">
+<link rel="stylesheet" href="style.css">
+<script defer src="js/econsole.js"></script>
+<script defer src="bpmn/bpmn-visualization.min.js"></script>
+<style>
+#bpmn-container {
+    overflow-x: auto;
+    overflow-y: auto;
+    width: 1000px; height: 800px;
+}
+</style>
+</head><body>
+
+<!-- Header -->
+<div id="head-bar-cnt"><div id="head-bar">
+</div></div>
+
+<div id="wrkspace-div-cnt"><div id="wrkspace-div">
+	<!-- left menu pane -->
+	<div class="menu-v-pane-cnt">
+		<div class="menu-v-logo"></div>
+		<div id="menu-v-pane"><!-- menu content -->
+		</div>
+	</div>
+	<!-- user main workspace -->
+	<div class="workspace-pane">
+		<div class="ui-pane">
+			<h1>Процесс формирования ГКПЗ</h1>
+			<h3>Диаграмма бизнес-процесса</h3>
+			<nav>
+				<span class="btn-drop-down"><a class="btn" href="#" tabindex="1">Набор БП</a><ul id="bpmn-pools"></ul></span>
+			</nav>
+			<div id='bpmn-container'></div>
+			<div>Для навигации используйте левую кнопку мыши. <br />Для увеличения/уменьшения схемы используйте среднее колесо мыши при зажатой кнопке <code>Ctrl</code></div>
+		</div>
+	</div>
+
+</div></div>
+
+<!-- Footer -->
+<div id="foot-bar-cnt"><div id="foot-bar">
+</div></div>
+
+</body>
+<script>
+// Some BPMN element names have break line, so remove them
+function linearizeName(bpmnSemantic) {
+  return bpmnSemantic.name
+      // replace all 3 types of line breaks with a space
+      ?.replace(/(\r\n|\n|\r)/gm,' ')
+      // replace all double white spaces with single spaces
+      .replace(/\s+/g," ");
+}
+
+
+window.addEventListener('load', function () {
+
+	const bpmnContainer = document.getElementById('bpmn-container');
+	const bpmnVisualization = new bpmnvisu.BpmnVisualization({ container: bpmnContainer, navigation: { enabled: true } });
+	const poolsMenu = document.getElementById('bpmn-pools');
+	// const url = 'https://raw.githubusercontent.com/bpmn-miwg/bpmn-miwg-test-suite/refs/heads/master/Camunda%20Eclipse%20Plugin%203.0.0/C.3.0-export.bpmn'
+	const url = './bpmn/t1.bpmn'
+	fetch(url).then(function (response) {
+		return response.text();
+	}).then(function (xml){
+		bpmnVisualization.load(xml);
+		bpmnVisualization.navigation.fit({type: bpmnvisu.FitType.Center, margin: 10});
+		// bpmnVisualization.navigation.fit({type: bpmnvisu.FitType.Vertical, margin: 10});
+
+		function changePoolsVisibility(pools, poolIdToHighlight) {
+		  const model = bpmnVisualization.graph.getModel();
+
+		  // TMP disable collapsing other pools, see https://github.com/process-analytics/bpmn-visualization-examples/pull/306
+		  const poolSelectionMethod = 'hide';
+		  const hideOthers = poolSelectionMethod === 'hide';
+		  const modelChangeFunction = hideOthers ?
+		      // only keep a single visible pool
+		      (cell => {
+		        model.setVisible(cell, cell.id === poolIdToHighlight);
+		        model.setCollapsed(cell, false);
+		      }) :
+		      // collapse other pools
+		      (cell => {
+		        model.setCollapsed(cell, cell.id !== poolIdToHighlight)
+		        model.setVisible(cell, true);
+		      });
+
+		  model.beginUpdate();
+		  try {
+		    pools.map(pool => model.getCell(pool.id))
+		    .forEach(modelChangeFunction);
+		  } finally {
+		    model.endUpdate();
+		  }
+
+		}
+		const bpmnElements = bpmnVisualization.bpmnElementsRegistry.getElementsByKinds([bpmnvisu.ShapeBpmnElementKind.POOL]);
+		const pools = bpmnElements.map(elt => elt.bpmnSemantic)
+		.filter(bpmnSemantic => bpmnSemantic.kind === bpmnvisu.ShapeBpmnElementKind.POOL);
+		let poolList = '';
+		poolsMenu.innerHTML = pools.map(pool => {
+			return `<li><span data-bpmn-id="${pool.id}">${linearizeName(pool)}</span></li>`
+		}).join('\n');
+		document.querySelectorAll('#bpmn-pools li span').forEach(function (anchor)  {
+			anchor.onclick = function (e) {
+				e.preventDefault();
+				changePoolsVisibility(pools, anchor.getAttribute('data-bpmn-id'));
+				return false;
+			}
+		});
+	})
+});
+</script>
+</html>
