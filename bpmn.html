@@ -25,6 +25,10 @@
 	filter: drop-shadow(0 0 .85em #0070ba);
 	fill: #e6e1e1;
 }
+.bpmn-type-activity.selected > rect {
+	stroke: #6582c0;
+	fill: #f6f6f6;
+}
 @keyframes dash-task {
   to {
     stroke-dashoffset:-15
@@ -61,7 +65,7 @@
 				</ul>Сброс</a></span>
 			</nav>
 			<div id='bpmn-container'></div>
-			<div style="text-align: right;color:#555;">Для навигации удерживайте левую кнопку мыши. <br />Для увеличения/уменьшения схемы используйте среднее колесо мыши при зажатой кнопке <code>Ctrl</code></div>
+			<div style="text-align: right;color:#555;font-size: 80%;">Для навигации удерживайте левую кнопку мыши. <br />Для увеличения/уменьшения схемы используйте среднее колесо мыши при зажатой кнопке <code>Ctrl</code></div>
 			<div id="img-1c"></div>
 		</div>
 	</div>
@@ -96,12 +100,15 @@ window.addEventListener('load', function () {
 		return response.text();
 	}).then(function (xml){
 		function elemClick(elt) {
-			console.log(elt, elt.bpmnSemantic.id);
+			bpmnVisualization.bpmnElementsRegistry.removeCssClasses(
+				bpmnVisualization.bpmnElementsRegistry.getElementsByKinds([bpmnvisu.ShapeBpmnElementKind.EVENT_START, bpmnvisu.ShapeBpmnElementKind.EVENT_END, bpmnvisu.ShapeBpmnElementKind.TASK, bpmnvisu.ShapeBpmnElementKind.SUB_PROCESS])
+				.map( (elt) => {return elt.bpmnSemantic.id;}),
+				['selected']);
 			const imgID = elt.bpmnSemantic.id.match(/_img(\d+)$/i);
 			const imgDiv = document.getElementById('img-1c');
 			if (imgID) {
-				console.log(imgID);
 				imgDiv.innerHTML = `<img src="./bpmn/1c/${imgID[1]}.png" />`;
+				bpmnVisualization.bpmnElementsRegistry.addCssClasses([elt.bpmnSemantic.id], ['selected']);
 			}
 			else
 				imgDiv.innerHTML = '';
