@@ -28,7 +28,6 @@ function rowClick(e) {
     e.stopPropagation();
     // e.preventDefault();
     let clickRow = e.currentTarget;
-    console.log( clickRow)
 }
 
 window.addEventListener('load', function () {
