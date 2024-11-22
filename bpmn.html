@@ -16,7 +16,7 @@
 #bpmn-container {
     overflow-x: auto;
     overflow-y: auto;
-    width: 1000px; height: 800px;
+    width: 1100px; height: 600px;
 }
 </style>
 </head><body>
@@ -38,10 +38,10 @@
 			<h1>Процесс формирования ГКПЗ</h1>
 			<h3>Диаграмма бизнес-процесса</h3>
 			<nav>
-				<span class="btn-drop-down"><a class="btn" href="#" tabindex="1">Набор БП</a><ul id="bpmn-pools"></ul></span>
+				<span class="btn-drop-down"><a class="btn" href="#" tabindex="1">Фильтр БП</a><ul id="bpmn-pools"></ul></span>
 			</nav>
 			<div id='bpmn-container'></div>
-			<div>Для навигации используйте левую кнопку мыши. <br />Для увеличения/уменьшения схемы используйте среднее колесо мыши при зажатой кнопке <code>Ctrl</code></div>
+			<div><br />Для навигации используйте левую кнопку мыши. <br />Для увеличения/уменьшения схемы используйте среднее колесо мыши при зажатой кнопке <code>Ctrl</code></div>
 		</div>
 	</div>
 
@@ -74,7 +74,7 @@ window.addEventListener('load', function () {
 		return response.text();
 	}).then(function (xml){
 		bpmnVisualization.load(xml);
-		bpmnVisualization.navigation.fit({type: bpmnvisu.FitType.Center, margin: 10});
+		// bpmnVisualization.navigation.fit({type: bpmnvisu.FitType.Center, margin: 10});
 		// bpmnVisualization.navigation.fit({type: bpmnvisu.FitType.Vertical, margin: 10});
 
 		function changePoolsVisibility(pools, poolIdToHighlight) {
