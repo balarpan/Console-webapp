@@ -61,7 +61,8 @@
 				</ul>Сброс</a></span>
 			</nav>
 			<div id='bpmn-container'></div>
-			<div><br />Для навигации удерживайте левую кнопку мыши. <br />Для увеличения/уменьшения схемы используйте среднее колесо мыши при зажатой кнопке <code>Ctrl</code></div>
+			<div style="text-align: right;color:#555;">Для навигации удерживайте левую кнопку мыши. <br />Для увеличения/уменьшения схемы используйте среднее колесо мыши при зажатой кнопке <code>Ctrl</code></div>
+			<div id="img-1c"></div>
 		</div>
 	</div>
 
@@ -73,6 +74,7 @@
 
 </body>
 <script>
+"use strinct";
 // Some BPMN element names have break line, so remove them
 function linearizeName(bpmnSemantic) {
   return bpmnSemantic.name
@@ -93,11 +95,28 @@ window.addEventListener('load', function () {
 	fetch(url).then(function (response) {
 		return response.text();
 	}).then(function (xml){
-		function loadDiagram(){
-			bpmnVisualization.load(xml, {'disableConsoleLog': true});
-			bpmnVisualization.bpmnElementsRegistry.addCssClasses(['Activity_current'], ['highlight-info']);
+		function elemClick(elt) {
+			console.log(elt, elt.bpmnSemantic.id);
+			const imgID = elt.bpmnSemantic.id.match(/_img(\d+)$/i);
+			const imgDiv = document.getElementById('img-1c');
+			if (imgID) {
+				console.log(imgID);
+				imgDiv.innerHTML = `<img src="./bpmn/1c/${imgID[1]}.png" />`;
+			}
+			else
+				imgDiv.innerHTML = '';
+		}
+		function loadDiagram() {
+			bpmnVisualization.load(xml, {fit: { type: bpmnvisu.FitType.Center, margin: 3 }});
+			bpmnVisualization.bpmnElementsRegistry.addCssClasses(['Activity_current_img4'], ['highlight-info']);
 			// bpmnVisualization.navigation.fit({type: bpmnvisu.FitType.Center, margin: 10});
 			// bpmnVisualization.navigation.fit({type: bpmnvisu.FitType.Vertical, margin: 10});
+			const bpmnElements = bpmnVisualization.bpmnElementsRegistry.getElementsByKinds([bpmnvisu.ShapeBpmnElementKind.EVENT_START, bpmnvisu.ShapeBpmnElementKind.EVENT_END, bpmnvisu.ShapeBpmnElementKind.TASK, bpmnvisu.ShapeBpmnElementKind.SUB_PROCESS]);
+			bpmnElements.filter(elt => elt.bpmnSemantic.kind !== bpmnvisu.ShapeBpmnElementKind.POOL)
+			.forEach(elt => {
+			      // elt.htmlElement.addEventListener('click', function (event, elt) {elemClick(event, elt);}.bind(elt));
+			      elt.htmlElement.addEventListener('click', elemClick.bind(this, elt));
+			    });
 		}
 
 		function changePoolsVisibility(pools, poolIdToHighlight) {
