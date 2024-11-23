@@ -25,10 +25,7 @@
 	filter: drop-shadow(0 0 .85em #0070ba);
 	fill: #e6e1e1;
 }
-.bpmn-type-activity.selected > rect {
-	stroke: #6582c0;
-	fill: #f6f6f6;
-}
+.bpmn-type-activity.selected > rect { stroke: #6582c0; fill: #f6f6f6; }
 @keyframes dash-task {
   to {
     stroke-dashoffset:-15
@@ -113,17 +110,20 @@ window.addEventListener('load', function () {
 			else
 				imgDiv.innerHTML = '';
 		}
-		function loadDiagram() {
-			bpmnVisualization.load(xml, {fit: { type: bpmnvisu.FitType.Center, margin: 3 }});
-			bpmnVisualization.bpmnElementsRegistry.addCssClasses(['Activity_current_img4'], ['highlight-info']);
-			// bpmnVisualization.navigation.fit({type: bpmnvisu.FitType.Center, margin: 10});
-			// bpmnVisualization.navigation.fit({type: bpmnvisu.FitType.Vertical, margin: 10});
+		function initClicks(){
 			const bpmnElements = bpmnVisualization.bpmnElementsRegistry.getElementsByKinds([bpmnvisu.ShapeBpmnElementKind.EVENT_START, bpmnvisu.ShapeBpmnElementKind.EVENT_END, bpmnvisu.ShapeBpmnElementKind.TASK, bpmnvisu.ShapeBpmnElementKind.SUB_PROCESS]);
 			bpmnElements.filter(elt => elt.bpmnSemantic.kind !== bpmnvisu.ShapeBpmnElementKind.POOL)
 			.forEach(elt => {
 			      // elt.htmlElement.addEventListener('click', function (event, elt) {elemClick(event, elt);}.bind(elt));
 			      elt.htmlElement.addEventListener('click', elemClick.bind(this, elt));
 			    });
+		}
+		function loadDiagram() {
+			bpmnVisualization.load(xml, {fit: { type: bpmnvisu.FitType.Center, margin: 3 }});
+			bpmnVisualization.bpmnElementsRegistry.addCssClasses(['Activity_current_img4'], ['highlight-info']);
+			// bpmnVisualization.navigation.fit({type: bpmnvisu.FitType.Center, margin: 10});
+			// bpmnVisualization.navigation.fit({type: bpmnvisu.FitType.Vertical, margin: 10});
+			initClicks();
 		}
 
 		function changePoolsVisibility(pools, poolIdToHighlight) {
@@ -151,6 +151,9 @@ window.addEventListener('load', function () {
 		  } finally {
 		    model.endUpdate();
 		  }
+		  const imgID = elt.bpmnSemantic.id.match(/_img(\d+)$/i);
+		  imgID.innerHTML = '';
+		  initClicks();
 
 		}
 		loadDiagram();
