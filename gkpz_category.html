@@ -30,7 +30,7 @@
 	<div class="workspace-pane">
 		<h1>Закупки по категориям</h1>
 		<div class="ui-pane-grouper">
-			<div class="ui-pane"><h1>По отношению к прошлому году</h1><div id="graph1"></div></div>
+			<div class="ui-pane"><h1>Объем к прошлому году</h1><div id="graph1"></div></div>
 			<div class="ui-pane"><h1>Исполнение ГКПЗ (по категориям)</h1><div id="graph2"></div></div>
 		</div>
 	</div>
@@ -44,7 +44,7 @@
 <script>
 "use strinct";
 const data1 = [{
-  values: [530, 570],
+  values: [530, 670],
   labels: ['2023г.', '2024г.'],
   marker: {colors: ['rgb(222,241,238)', 'rgb(0,121,194)']},
   name: 'объём', hoverinfo: 'label+value+percent',
@@ -69,25 +69,25 @@ const data2_proc = [[83.2, 73.4, 83.5], [9.5, 13.5, 5.2], [7.3, 13.1, 11.3]]
 const data2 = [{
 	x: ['ДЗО-1','ДЗО-2','ДЗО-3'],
 	y: data2_proc[0], name: 'МТР', type: 'bar',
-	text: data2_proc[0].map(String), textposition: 'auto',
+	text: data2_proc[0].map((e) => e + '%'), textposition: 'auto',
 	marker: {color: '#0079c2'},
 },{
 	x: ['ДЗО-1','ДЗО-2','ДЗО-3'],
 	y: data2_proc[1], name: 'услуги', type: 'bar',
-	text: data2_proc[1].map(String), textposition: 'auto',
+	text: data2_proc[1].map((e) => e + '%'), textposition: 'auto',
 	marker: {color: '#69bdf1'},
 },{
 	x: ['ДЗО-1','ДЗО-2','ДЗО-3'],
 	y: data2_proc[2], name: 'работы', type: 'bar',
-	text: data2_proc[2].map(String), textposition: 'auto',
+	text: data2_proc[2].map((e) => e + '%'), textposition: 'auto',
 	marker: {color: '#def1ee'},
 }];
 const layout2 = {
 	barmode: 'stack', hoverinfo: 'label+text+value',
 	legend: {orientation: 'h', side: 'bottom'},
 	paper_bgcolor: '#fafafa', graph_bgcolor: '#fafafa',
-	margin: {t: 20}, width: 620
-	// margin: { l: 3, r: 3, b: 3, t: 20, pad: 50 },
+	margin: {t: 20}, width: 620,
+	// barcornerradius: 15,
 };
 
 const pl_config = {locale: 'ru', displaylogo: false, responsive: true, displayModeBar: true};
