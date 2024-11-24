@@ -47,6 +47,34 @@ window.addEventListener('load', function () {
 	}
 });
 
+class GKPZ {
+  constructor() {
+    this.gkpz_csv_url = './data/gkpz.csv';
+    this.gkpz_csv = this._loadGKPZ();    
+  }
+
+  async _addScript(src) {
+  	return  new Promise((resolve, reject) => {
+	    const el = document.createElement('script');
+	    el.src = src;
+	    el.addEventListener('load', resolve);
+	    el.addEventListener('error', reject);
+	    document.body.append(el);
+		});
+	}
+
+	async _loadGKPZ() {
+		try {
+		  await this._addScript('./js/papaparse.min.js');
+		} catch (e) {
+		  console.log('Ошибка загрузки скрипта данных ГКПЗ',e);
+		}
+	}
+
+}
+
+const gkpz_data = new GKPZ();
+
 function nextValidSibling(in_tag, incText=false) {
 	//incText - do we detect Text Nodes too
 	let acpType = incText ? [1,3] : [1];
@@ -165,3 +193,5 @@ function bir_company_id(id) {
 	});
 
 }
+
+
