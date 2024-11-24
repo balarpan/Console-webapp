@@ -33,6 +33,7 @@
 			<div class="ui-pane"><h1>Объем к прошлому году</h1><div id="graph1"></div></div>
 			<div class="ui-pane"><h1>Исполнение ГКПЗ (по категориям)</h1><div id="graph2"></div></div>
 		</div>
+		<div class="ui-pane"><h1>test</h1><div id="graph3"></div></div>
 	</div>
 
 </div></div>
@@ -91,10 +92,44 @@ const layout2 = {
 };
 
 const pl_config = {locale: 'ru', displaylogo: false, responsive: true, displayModeBar: true};
+
+function onlyUnique(value, index, array) {
+  return array.indexOf(value) === index;
+}
+
+function mass_draw(gkpz) {
+	const headerList = ['Дата (период) размещения извещения о закупке', 'Начальная (максимальная) цена договора', 'Регион поставки товаров (выполнения работ, оказания услуг)', 'Закупка в электронной форме', 'Способ закупки'];
+	const in_data = gkpz.getData(headerList);
+	let x = gkpz.getColumn('Регион поставки товаров (выполнения работ, оказания услуг)');
+	let y = gkpz.getColumn('Начальная (максимальная) цена договора');
+	// let data = [];
+	const data = [{
+		x: x, y: y,
+		// text: in_data[2],
+		type: 'bar',
+		transforms: [{
+			type: 'aggregate',
+			groups: x.filter(onlyUnique),
+			aggregations: [
+				{target: 'y', func: 'count', enabled: true},
+				]
+		}],
+	}]
+	console.log(x.filter(onlyUnique), x,y);
+
+	const layout = {margin: {t: 20}, width: 820,}
+
+	Plotly.newPlot('graph3', data, layout, pl_config);
+}
+
 window.addEventListener('load', function () {
 	Plotly.newPlot('graph1', data1, layout1, pl_config);
 	Plotly.newPlot('graph2', data2, layout2, pl_config);
+
+	gkpz_data = new GKPZ();
+	gkpz_data.whenDataReady(mass_draw);
 });
+
 
 </script>
 </body></html>

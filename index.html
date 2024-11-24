@@ -11,13 +11,16 @@
 <link rel="icon" type="image/png" sizes="16x16" href="ico/favicon-16x16.png">
 <link rel="stylesheet" href="style.css">
 <script defer src="js/econsole.js"></script>
+<style>
+	iframe {height:100%;width:100%;border:0px;}
+</style>
 </head><body>
 
 <!-- Header -->
 <div id="head-bar-cnt"><div id="head-bar">
 </div></div>
 
-<div id="wrkspace-div-cnt"><div id="wrkspace-div">
+<div id="wrkspace-div-cnt"><div id="wrkspace-div" style="height: 100vh;">
 	<!-- left menu pane -->
 	<div class="menu-v-pane-cnt">
 		<div class="menu-v-logo"></div>
@@ -25,9 +28,27 @@
 		</div>
 	</div>
 	<!-- user main workspace -->
-	<div class="workspace-pane">
-		<img src="miniature/miniature1.png" width="1321px" height="761px">
-	</div>
+		<iframe src="https://bi.dev.igit.spb.ru/superset/dashboard/14/?standalone=1&show_filters=1&expand_filters=0"></iframe>
+<!--
+Customizing dashboard
+
+The following URL parameters can be used to modify how the dashboard is rendered:
+
+    standalone:
+        0 (default): dashboard is displayed normally
+        1: Top Navigation is hidden
+        2: Top Navigation + title is hidden
+        3: Top Navigation + title + top level tabs are hidden
+    show_filters:
+        0: render dashboard without Filter Bar
+        1 (default): render dashboard with Filter Bar if native filters are enabled
+    expand_filters:
+        (default): render dashboard with Filter Bar expanded if there are native filters
+        0: render dashboard with Filter Bar collapsed
+        1: render dashboard with Filter Bar expanded
+
+For example, when running the local development build, the following will disable the Top Nav and remove the Filter Bar: http://localhost:8088/superset/dashboard/my-dashboard/?standalone=1&show_filters=0
+-->
 
 </div></div>
 

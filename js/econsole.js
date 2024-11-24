@@ -48,13 +48,45 @@ window.addEventListener('load', function () {
 });
 
 class GKPZ {
-  constructor() {
-    this.gkpz_csv_url = './data/gkpz.csv';
-    this.gkpz_csv = this._loadGKPZ();    
-  }
+	constructor() {
+		this.gkpz_csv_url = './data/gkpz.csv';
+		this._gkpz_header = undefined;
+		this._gkpz_data = undefined;
+		this._data_promise = this._loadGKPZ();
+	}
 
-  async _addScript(src) {
-  	return  new Promise((resolve, reject) => {
+	isDataReady() { return undefined !== this._gkpz_header && undefined !== this._gkpz_data;}
+	getHeader() { return this._gkpz_header; }
+	getData(headerList) {
+		if (!headerList)
+			return this._gkpz_data;
+		let colsRet = [];
+		this._gkpz_header.forEach( (el, ind) => {
+			if (headerList.includes(el))
+				colsRet.push(ind);
+		});
+
+		return this._gkpz_data.map( r => colsRet.map(i => r[i]))
+	}
+	getColumn(name) { return this.getData([name]).map( r => r[0] );}
+
+	getHeaderPromise() {
+		var self = this;
+		return this._data_promise.then((e) => {return self.getHeader();});
+	}
+  
+	getDataPromise() {
+		let self = this;
+		return this._data_promise.then((e) => {return self.getData();});
+	}
+
+	whenDataReady(callBack, errCallBack=undefined) {
+		const self = this;
+		this._data_promise.then( () => callBack(self), errCallBack );
+	}
+
+	async _addScript(src) {
+		return  new Promise((resolve, reject) => {
 	    const el = document.createElement('script');
 	    el.src = src;
 	    el.addEventListener('load', resolve);
@@ -64,16 +96,30 @@ class GKPZ {
 	}
 
 	async _loadGKPZ() {
+		let self = this;
+		let csvResolve, csvReject;
+		const prom = new Promise( (resolve, reject) => { csvResolve = resolve; csvReject = reject; });
 		try {
 		  await this._addScript('./js/papaparse.min.js');
+		  Papa.parse(this.gkpz_csv_url, {
+		  	download: true,
+		  	header: false, skipEmptyLines: true,
+		  	dynamicTyping: true,
+		  	complete: function(answer) {
+		  		self._gkpz_header = answer.data[0];
+		  		self._gkpz_data = answer.data.slice(1);
+		  		csvResolve();
+		  	},
+		  	error: function(err) {csvReject(err);},
+		  });
 		} catch (e) {
-		  console.log('Ошибка загрузки скрипта данных ГКПЗ',e);
+		  console.log('Ошибка загрузки скрипта сведений ГКПЗ',e);
 		}
-	}
 
+		return prom;
+	}
 }
 
-const gkpz_data = new GKPZ();
 
 function nextValidSibling(in_tag, incText=false) {
 	//incText - do we detect Text Nodes too
