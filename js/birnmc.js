@@ -69,6 +69,16 @@ window.addEventListener('load', function () {
 				newTag.setAttribute('href', "birsearch.html?srchname=" + encodeURIComponent(r1));
 				newTag.appendChild(newText);
 			}
+			else if ( 7 == cellNum && 5 < r1) {
+				newTag = document.createElement('span');
+				newTag.classList.add('high-value');
+				newTag.appendChild(newText);
+			}
+			else if ( 8 == cellNum && 500000 < r1) {
+				newTag = document.createElement('span');
+				newTag.classList.add('high-value');
+				newTag.appendChild(newText);
+			}
 			else
 				newTag = newText;
 			cell.appendChild(newTag);
@@ -94,9 +104,9 @@ window.addEventListener('load', function () {
 			appendRow(rec);
 			let prog = parseInt(100 * (rec_i+1) / dummyComp.length);
 			progress.style.setProperty("--progressbar", `${prog}%`);
-			if (prog >= 100)
+			if ( rec_i >= dummyComp.length -1 )
 				finishTable();
-		}, rec_i * 1000 * Math.random()*1);
+		}, rec_i * 1000 * Math.random()*.5);
 	})
 	// for (let rec_i=0; rec_i < dummyComp.length; rec_i++) {
 	// 	let rec = dummyComp[rec_i];

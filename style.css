@@ -302,6 +302,12 @@ DT.adress-brief-warn {background: revert; color: #fe5000; border: none; padding:
 TABLE#nmc-decrease-table td { font-variant-numeric: slashed-zero; }
 TABLE#nmc-decrease-table td.st1 { color: #18413a; font-weight: bold;}
 TABLE#nmc-decrease-table td.st3 { color: #3e3e97; font-family: Tahoma; font-size: 90%;}
+TABLE#nmc-decrease-table td a {
+	text-decoration:none; transition: .3s color linear;
+	position:relative;
+	&:visited{color:reset;}
+	&:hover { color:#0073c1; &::after{content: '📰'; display:inline-block; position: absolute; z-index:1;}}
+}
 
 
 /* spinner */

@@ -16,7 +16,7 @@
 #bpmn-container {
     overflow-x: auto;
     overflow-y: auto;
-    width: 1100px; height: 600px;
+    width: 1200px; height: 600px;
 }
 .bpmn-type-activity.highlight-info > rect {
 	stroke-dasharray: 10,5;
@@ -25,7 +25,8 @@
 	filter: drop-shadow(0 0 .85em #0070ba);
 	fill: #e6e1e1;
 }
-.bpmn-type-activity.selected > rect { stroke: #6582c0; fill: #f6f6f6; }
+.bpmn-type-activity.selected > rect { stroke: #6582c0; fill: #eff6fb; }
+.bpmn-type-event.selected > ellipse { stroke: #6582c0; fill: #eff6fb; }
 @keyframes dash-task {
   to {
     stroke-dashoffset:-15
@@ -119,7 +120,7 @@ window.addEventListener('load', function () {
 			    });
 		}
 		function loadDiagram() {
-			bpmnVisualization.load(xml, {fit: { type: bpmnvisu.FitType.Center, margin: 40 }});
+			bpmnVisualization.load(xml, {fit: { type: bpmnvisu.FitType.Horizontal, margin: 40 }});
 			bpmnVisualization.bpmnElementsRegistry.addCssClasses(['Activity_current_img4'], ['highlight-info']);
 			// bpmnVisualization.navigation.fit({type: bpmnvisu.FitType.Center, margin: 10});
 			// bpmnVisualization.navigation.fit({type: bpmnvisu.FitType.Vertical, margin: 10});

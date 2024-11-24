@@ -33,7 +33,6 @@
 			<div class="ui-pane"><h1>Объем к прошлому году</h1><div id="graph1"></div></div>
 			<div class="ui-pane"><h1>Исполнение ГКПЗ (по категориям)</h1><div id="graph2"></div></div>
 		</div>
-		<div class="ui-pane"><h1>test</h1><div id="graph3"></div></div>
 	</div>
 
 </div></div>
@@ -97,10 +96,17 @@ function onlyUnique(value, index, array) {
   return array.indexOf(value) === index;
 }
 
+function stackedGroupedData(groupFld, stackFld, in_data) {
+	let ret = [];
+	groupFld.filter(onlyUnique).forEach( (group) => {
+		let stackLst = in_data 
+	})
+}
+
 function mass_draw(gkpz) {
 	const headerList = ['Дата (период) размещения извещения о закупке', 'Начальная (максимальная) цена договора', 'Регион поставки товаров (выполнения работ, оказания услуг)', 'Закупка в электронной форме', 'Способ закупки'];
 	const in_data = gkpz.getData(headerList);
-	let x = gkpz.getColumn('Регион поставки товаров (выполнения работ, оказания услуг)');
+	let x = gkpz.getColumn('Закупка в электронной форме');
 	let y = gkpz.getColumn('Начальная (максимальная) цена договора');
 	// let data = [];
 	const data = [{
@@ -111,15 +117,15 @@ function mass_draw(gkpz) {
 			type: 'aggregate',
 			groups: x.filter(onlyUnique),
 			aggregations: [
-				{target: 'y', func: 'count', enabled: true},
+				{target: 'y', func: 'sum', enabled: true},
 				]
 		}],
 	}]
 	console.log(x.filter(onlyUnique), x,y);
 
-	const layout = {margin: {t: 20}, width: 820,}
+	const layout = {margin: {t: 20}, width: 820, barmode: 'group',}
 
-	Plotly.newPlot('graph3', data, layout, pl_config);
+	// Plotly.newPlot('graph3', data, layout, pl_config);
 }
 
 window.addEventListener('load', function () {
