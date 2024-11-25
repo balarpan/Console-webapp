@@ -64,7 +64,7 @@
 					<li id="bpmn-fit-vert"><span>Вписать по вертикали</span></li>
 					<li id="bpmn-fit-horiz"><span>Вписать по горизонтали</span></li>
 					<li id="bpmn-fit-none"><span>Сбросить увеличение</span></li>
-				</ul>Сброс</a></span>
+				</ul>Схема</a></span>
 			</nav>
 			<div id='bpmn-container'></div>
 			<div style="text-align: right;color:#555;font-size: 80%;">Для навигации удерживайте левую кнопку мыши. <br />Для увеличения/уменьшения схемы используйте среднее колесо мыши при зажатой кнопке <code>Ctrl</code></div>
@@ -125,7 +125,7 @@ window.addEventListener('load', function () {
 		}
 		function loadDiagram() {
 			bpmnVisualization.load(xml, {fit: { type: bpmnvisu.FitType.Horizontal, margin: 40 }});
-			bpmnVisualization.bpmnElementsRegistry.addCssClasses(['Activity_current_img4'], ['highlight-info']);
+			bpmnVisualization.bpmnElementsRegistry.addCssClasses(['Activity_current'], ['highlight-info']);
 			// bpmnVisualization.navigation.fit({type: bpmnvisu.FitType.Center, margin: 10});
 			// bpmnVisualization.navigation.fit({type: bpmnvisu.FitType.Vertical, margin: 10});
 			initClicks();
