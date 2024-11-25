@@ -28,6 +28,14 @@ function rowClick(e) {
     e.stopPropagation();
     // e.preventDefault();
     let clickRow = e.currentTarget;
+    // tippy(e.target, {
+    // 	content:'',
+    // 	delay: 0,
+    // 	allowHTML: true, interactive: true,
+    // 	placement: 'bottom',
+    // 	showOnCreate: true, theme: 'light-border',
+    // 	trigger: 'manual',
+    // });
 }
 
 window.addEventListener('load', function () {
