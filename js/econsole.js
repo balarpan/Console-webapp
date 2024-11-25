@@ -6,10 +6,10 @@ window.addEventListener('load', function () {
 			<li><a class="menu-btn-home" href="index.html"></a></li>
 			<li><div class="menu-btn-calend">
 				<ul class="submenu">
-					<li><a href="birsearch.html">Поиск и проверка контрагента</a></li>
-					<li><a href="bir-nmc.html">Проверка НМЦ в ГКПЗ</a></li>
+					<li><a href="birsearch.html">Проверка контрагентов</a></li>
+					<li><a href="bir-nmc.html">Контроль НМЦ в ГКПЗ</a></li>
 					<li><a href="#">Фин устойчивость</a></li>
-					<li><a href="bpmn.html">БП проведения закупки</a></li>
+					<li><a href="bpmn.html">БП закупочной процедуры</a></li>
 				</ul>
 			</div></li>
 			<li><a class="menu-btn-users" href="#"></a></li>
@@ -17,7 +17,7 @@ window.addEventListener('load', function () {
 				<ul class="submenu">
 					<li><a href="ui-dummy.html?i=2">Доля внеплановых закупок</a></li>
 					<li><a href="ui-dummy.html?i=1">Закупки по категориям</a></li>
-					<li><a href="ui-dummy.html?i=3">Контроль сроков закупок</a></li>
+					<li><a href="ui-dummy.html?i=3">Контроль сроков закупочных процедур</a></li>
 					<li><a href="ui-dummy.html?i=4">Контроль за ходом исполнения ГКПЗ</a></li>
 					<li><a href="ui-dummy.html?i=5">Мониторинг ключевых точек закупочного процесса</a></li>
 				</ul>
