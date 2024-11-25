@@ -309,6 +309,19 @@ TABLE#nmc-decrease-table td a {
 	&:hover { color:#0073c1; &::after{content: '📰'; display:inline-block; position: absolute; z-index:1;}}
 }
 
+/*popup with menu */
+ul.popup-menu {
+	list-style: none; border:none; margin:0; padding:0;
+}
+ul.popup-menu li {
+	color:#000; background: #fff;
+	min-width: 10rem; margin:0; padding: 1em; color: #000; background: var(--wrkspace-bg);
+	cursor: pointer;
+	&:hover { background: var(--item-sel-color); }
+}
+ul.popup-menu li:first-child {border-top-left-radius: 7px; border-top-right-radius: 7px;}
+ul.popup-menu li:last-child {border-bottom-left-radius: 7px; border-bottom-right-radius: 7px;}
+ul.popup-menu li a {text-decoration: none; color:#000; &:visited {color: #000;}}
 
 /* spinner */
 .spinner {

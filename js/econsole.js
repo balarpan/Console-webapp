@@ -25,9 +25,9 @@ window.addEventListener('load', function () {
 			<li><a class="menu-btn-doc" href="#"></a></li>
 			<li><div class="menu-btn-bi">
 				<ul class="submenu">
+					<li><a href="osvoenie-budgeta.html">Освоение бюджета</a></li>
 					<li><a href="gkpz_category.html">Исполнение ГКПЗ по категориям</a></li>
 					<li><a href="ui-dummy.html?i=6">Объем закупок</a></li>
-					<li><a href="ui-dummy.html?i=7">Освоение бюджета</a></li>
 					<li><a href="ui-dummy.html?i=8">Соблюдение сроков</a></li>
 				</ul>
 			</div></li>

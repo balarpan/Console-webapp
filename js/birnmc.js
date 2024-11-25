@@ -28,14 +28,19 @@ function rowClick(e) {
     e.stopPropagation();
     // e.preventDefault();
     let clickRow = e.currentTarget;
-    // tippy(e.target, {
-    // 	content:'',
-    // 	delay: 0,
-    // 	allowHTML: true, interactive: true,
-    // 	placement: 'bottom',
-    // 	showOnCreate: true, theme: 'light-border',
-    // 	trigger: 'manual',
-    // });
+    const menu = [['Пересогласовать&hellip;','bpmn.html'], ['Пересчитать&hellip;','#'], ['Найти похожие&hellip;','#'], ['ЭДО','#']];
+    let popuptxt = '';
+    menu.map( (el)=> {popuptxt += `<li><a href="${el[1]}">${el[0]}</a></li>`});
+    tippy(e.target, {
+    	content:`<ul class="popup-menu">${popuptxt}</ul>`,
+    	delay: 0,
+    	allowHTML: true, interactive: true,
+    	placement: 'bottom',
+    	showOnCreate: true, theme: 'light-border',
+    	onHidden: (instance) => {instance.unmount(); return true},
+    	trigger: 'manual',
+    	moveTransition: 'transform 1.2s ease-out',
+    });
 }
 
 window.addEventListener('load', function () {
