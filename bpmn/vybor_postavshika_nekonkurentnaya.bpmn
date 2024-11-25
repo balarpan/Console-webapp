@@ -3,8 +3,8 @@
   <bpmn:collaboration id="Collaboration_1l098oo">
     <bpmn:participant id="Participant_0slttho" name="Ответственный за проведение закупок ДЗО" processRef="Process_15dyzrj" />
     <bpmn:participant id="Participant_1bpdhg2" name="Ответственный за проведение закупок ГЭХ" processRef="Process_05inite" />
-    <bpmn:messageFlow id="Flow_1ezenlm" sourceRef="Activity_08g3r3h" targetRef="Activity_1m3wxx0_img3" />
-    <bpmn:messageFlow id="Flow_1uhh8kn" sourceRef="Activity_13prk7r_img5" targetRef="Activity_current" />
+    <bpmn:messageFlow id="Flow_1ezenlm" sourceRef="Activity_08g3r3h_img5" targetRef="Activity_1m3wxx0_img3" />
+    <bpmn:messageFlow id="Flow_1uhh8kn" sourceRef="Activity_13prk7r" targetRef="Activity_current" />
   </bpmn:collaboration>
   <bpmn:process id="Process_15dyzrj" isExecutable="true">
     <bpmn:laneSet id="LaneSet_1it9aht" />
@@ -27,7 +27,7 @@
       <bpmn:outgoing>Flow_0tdwq5y</bpmn:outgoing>
       <bpmn:outgoing>Flow_0ad94xo</bpmn:outgoing>
     </bpmn:parallelGateway>
-    <bpmn:task id="Activity_08g3r3h" name="Фиксация результата закупки">
+    <bpmn:task id="Activity_08g3r3h_img5" name="Фиксация результата закупки">
       <bpmn:incoming>Flow_1aeyoup</bpmn:incoming>
     </bpmn:task>
     <bpmn:sequenceFlow id="Flow_1oeb5re" sourceRef="Event_0rcyi9w" targetRef="Activity_current" />
@@ -37,7 +37,7 @@
     <bpmn:sequenceFlow id="Flow_00gcp1t" sourceRef="Activity_dfhgfgdfgj_img1" targetRef="Gateway_16pzgf7" />
     <bpmn:sequenceFlow id="Flow_0tdwq5y" name="Нет" sourceRef="Gateway_16pzgf7" targetRef="Activity_0wp2h58_img6" />
     <bpmn:sequenceFlow id="Flow_0ad94xo" name="Да" sourceRef="Gateway_16pzgf7" targetRef="Activity_11ts9nm_img44" />
-    <bpmn:sequenceFlow id="Flow_1aeyoup" sourceRef="Activity_11ts9nm_img44" targetRef="Activity_08g3r3h" />
+    <bpmn:sequenceFlow id="Flow_1aeyoup" sourceRef="Activity_11ts9nm_img44" targetRef="Activity_08g3r3h_img5" />
     <bpmn:subProcess id="Activity_dfhgfgdfgj_img1" name="Внесение информации о поставщиках">
       <bpmn:incoming>Flow_0ifgxws</bpmn:incoming>
       <bpmn:outgoing>Flow_00gcp1t</bpmn:outgoing>
@@ -70,12 +70,12 @@
     <bpmn:endEvent id="Event_188y49w_img7" name="Выбран поставщик">
       <bpmn:incoming>Flow_1or7klv</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:subProcess id="Activity_13prk7r_img5" name="Решение о повторной процедуре">
+    <bpmn:subProcess id="Activity_13prk7r" name="Решение о повторной процедуре">
       <bpmn:incoming>Flow_1twu7pj</bpmn:incoming>
     </bpmn:subProcess>
     <bpmn:sequenceFlow id="Flow_0w8e3ap" sourceRef="Activity_1m3wxx0_img3" targetRef="Gateway_0z7owqf" />
     <bpmn:sequenceFlow id="Flow_1or7klv" name="Да" sourceRef="Gateway_0z7owqf" targetRef="Event_188y49w_img7" />
-    <bpmn:sequenceFlow id="Flow_1twu7pj" name="Нет" sourceRef="Gateway_0z7owqf" targetRef="Activity_13prk7r_img5" />
+    <bpmn:sequenceFlow id="Flow_1twu7pj" name="Нет" sourceRef="Gateway_0z7owqf" targetRef="Activity_13prk7r" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1l098oo">
@@ -105,7 +105,7 @@
           <dc:Bounds x="845" y="220" width="70" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_08g3r3h_di" bpmnElement="Activity_08g3r3h">
+      <bpmndi:BPMNShape id="Activity_08g3r3h_di" bpmnElement="Activity_08g3r3h_img5">
         <dc:Bounds x="1090" y="310" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
@@ -193,7 +193,7 @@
           <dc:Bounds x="1273" y="755" width="55" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_02f0tms_di" bpmnElement="Activity_13prk7r_img5">
+      <bpmndi:BPMNShape id="Activity_02f0tms_di" bpmnElement="Activity_13prk7r">
         <dc:Bounds x="340" y="550" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
@@ -227,7 +227,7 @@
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1dgs9oj">
-    <bpmndi:BPMNPlane id="BPMNPlane_1pjw2b0" bpmnElement="Activity_13prk7r_img5" />
+    <bpmndi:BPMNPlane id="BPMNPlane_1pjw2b0" bpmnElement="Activity_13prk7r" />
   </bpmndi:BPMNDiagram>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1afudbb">
     <bpmndi:BPMNPlane id="BPMNPlane_1enk8lm" bpmnElement="Activity_dfhgfgdfgj_img1" />
